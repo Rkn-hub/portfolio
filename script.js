@@ -699,8 +699,9 @@ class ParticleText {
         this.interactionLayer.style.width = '100%';
         this.interactionLayer.style.height = '100%';
         this.interactionLayer.style.zIndex = '51'; // Above canvas
-        this.interactionLayer.style.touchAction = 'none'; // CRITICAL: Prevent scrolling in this specific region
-        this.interactionLayer.style.background = 'rgba(0,0,0,0)'; // Force hit testing
+        this.interactionLayer.style.touchAction = 'manipulation'; // Allow touch but we control scrolling
+        this.interactionLayer.style.pointerEvents = 'auto'; // CRITICAL: Receive touch events
+        this.interactionLayer.style.background = 'transparent';
         this.container.appendChild(this.interactionLayer);
 
         // Hide original text
@@ -744,45 +745,55 @@ class ParticleText {
             }, 100);
         });
 
-        // Track mouse on window (Desktop)
+        // Track mouse on window (Desktop only)
         window.addEventListener('mousemove', (e) => {
             if (!this.isTouch && this.canvas) {
                 this.handleInput(e.clientX, e.clientY);
             }
         });
 
-        // Touch Events on Interaction Layer (Mobile Region) - Optimized
-        // Cache rect to avoid layout thrashing during swipe
-        this.cachedRect = null;
+        // Touch Events - Only activate within text bounds, allow scroll in padding
+        if (this.isTouch) {
+            this.isTouchingText = false;
 
-        this.interactionLayer.addEventListener('touchstart', (e) => {
-            if (e.cancelable) e.preventDefault();
-            this.cachedRect = this.canvas.getBoundingClientRect(); // Cache on start
-            const touch = e.touches[0];
+            this.interactionLayer.addEventListener('touchstart', (e) => {
+                const touch = e.touches[0];
+                const containerRect = this.container.getBoundingClientRect();
 
-            // Calculate directly
-            this.mouse.x = touch.clientX - this.cachedRect.left;
-            this.mouse.y = touch.clientY - this.cachedRect.top;
-            this.startAnimation();
-        }, { passive: false });
+                // Check if touch is within the container bounds
+                if (touch.clientX >= containerRect.left &&
+                    touch.clientX <= containerRect.right &&
+                    touch.clientY >= containerRect.top &&
+                    touch.clientY <= containerRect.bottom) {
 
-        this.interactionLayer.addEventListener('touchmove', (e) => {
-            if (e.cancelable) e.preventDefault();
-            if (!this.cachedRect) this.cachedRect = this.canvas.getBoundingClientRect(); // Safety
+                    this.isTouchingText = true;
+                    if (e.cancelable) e.preventDefault();
 
-            const touch = e.touches[0];
-            this.mouse.x = touch.clientX - this.cachedRect.left;
-            this.mouse.y = touch.clientY - this.cachedRect.top;
-            this.startAnimation();
-        }, { passive: false });
+                    const canvasRect = this.canvas.getBoundingClientRect();
+                    this.mouse.x = touch.clientX - canvasRect.left;
+                    this.mouse.y = touch.clientY - canvasRect.top;
+                    this.startAnimation();
+                }
+            }, { passive: false });
 
-        this.interactionLayer.addEventListener('touchend', (e) => {
-            // Prevent ghost clicks if needed, but mainly clear mouse
-            if (e.cancelable) e.preventDefault();
-            this.mouse.x = null;
-            this.mouse.y = null;
-            this.cachedRect = null; // Clear cache
-        });
+            this.interactionLayer.addEventListener('touchmove', (e) => {
+                if (this.isTouchingText) {
+                    if (e.cancelable) e.preventDefault();
+
+                    const touch = e.touches[0];
+                    const canvasRect = this.canvas.getBoundingClientRect();
+                    this.mouse.x = touch.clientX - canvasRect.left;
+                    this.mouse.y = touch.clientY - canvasRect.top;
+                    this.startAnimation();
+                }
+            }, { passive: false });
+
+            this.interactionLayer.addEventListener('touchend', () => {
+                this.isTouchingText = false;
+                this.mouse.x = null;
+                this.mouse.y = null;
+            });
+        }
     }
 
     handleInput(clientX, clientY) {
