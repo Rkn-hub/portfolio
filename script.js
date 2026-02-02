@@ -1006,15 +1006,21 @@ function initGalleryAnimation() {
         duration: 1,
         ease: "power2.inOut",
         onUpdate: function () {
-            // Scramble text effect on scroll
+            // Flicker through specific words on scroll
             if (Math.random() > 0.7) {
-                const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*";
-                const original = "SELECTED WORK";
-                let scrambled = "";
-                for (let i = 0; i < original.length; i++) {
-                    scrambled += Math.random() > 0.5 ? chars[Math.floor(Math.random() * chars.length)] : original[i];
-                }
-                title.innerText = scrambled;
+                const words = [
+                    "gallery",
+                    "portfolio",
+                    "certificates",
+                    "Rkn",
+                    "skills",
+                    "startups",
+                    "freelancing",
+                    "ideas",
+                    "design"
+                ];
+                const randomWord = words[Math.floor(Math.random() * words.length)];
+                title.innerText = randomWord;
             }
         }
     }, "start")

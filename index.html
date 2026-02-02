@@ -498,8 +498,8 @@
             </div>
         </section>
         <!-- Section 4: Project -->
-        <section class="section relative flex flex-col justify-between p-6 md:p-12" id="projects"
-            style="cursor: crosshair; z-index: 10;">
+        <section class="section relative flex flex-col justify-between p-6 md:p-12 overflow-visible" id="projects"
+            style="cursor: crosshair; z-index: 10; height: auto; min-height: 100vh;">
             <div class="absolute inset-0 pointer-events-none z-0 opacity-10"
                 style="background-image: linear-gradient(#000 1px, transparent 1px), linear-gradient(90deg, #000 1px, transparent 1px); background-size: 100px 100px;">
             </div>
@@ -587,7 +587,7 @@
 
                 <!-- Project Cards Grid: 2 rows x 5 cards -->
                 <!-- Project Cards Grid: Responsive Columns -->
-                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 w-full max-w-5xl px-4 z-20 mt-6">
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 w-full max-w-5xl px-4 z-20 mt-6 pb-16">
                     <!-- Row 1 -->
                     <div class="project-card group cursor-pointer" style="perspective: 1000px;">
                         <div class="project-card-inner relative w-full aspect-[4/5] transition-transform duration-500 group-hover:[transform:rotateY(180deg)]"
@@ -788,15 +788,6 @@
                     <p class="hidden md:block text-xs font-mono text-black max-w-[200px] text-right">
                         A mix of shipped projects, experiments, and research explorations.
                     </p>
-                    <a class="group relative inline-flex items-center justify-center gap-3 bg-black text-primary px-8 py-4 overflow-hidden rounded-sm transition-all hover:bg-white hover:text-black"
-                        href="#">
-                        <span class="relative z-10 font-bold tracking-widest text-sm uppercase">View Project</span>
-                        <span
-                            class="material-symbols-outlined relative z-10 text-lg group-hover:rotate-45 transition-transform">arrow_outward</span>
-                        <div
-                            class="absolute inset-0 bg-white translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out">
-                        </div>
-                    </a>
                 </div>
             </footer>
 
