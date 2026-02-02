@@ -7,6 +7,17 @@
             --primary: #0066ff;
         }
 
+        /* Prevent FOUC (Flash of Unstyled Content) */
+        body {
+            opacity: 0;
+            background-color: #0066ff;
+            transition: opacity 0.1s ease-in;
+        }
+
+        body.loaded {
+            opacity: 1;
+        }
+
         /* Utility for 3D card flips */
         .backface-hidden {
             backface-visibility: hidden;

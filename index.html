@@ -46,6 +46,12 @@
         } 
     </script>
     <link rel="stylesheet" href="style.css">
+    <script>
+        // Prevent FOUC: Show body after CSS is loaded
+        document.addEventListener('DOMContentLoaded', function () {
+            document.body.classList.add('loaded');
+        });
+    </script>
 </head>
 
 <body class="bg-primary font-display text-black selection:bg-black selection:text-white"
@@ -506,50 +512,50 @@
                         PROJECTS
                     </h1>
                     <script>
-                            (function () {
-                                const header = document.getElementById('dynamic-header');
-                                const words = ["PROJECTS", "IDEAS", "RESEARCHES", "STARTUPS"];
-                                let index = 0;
-                                const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*";
+                        (function () {
+                            const header = document.getElementById('dynamic-header');
+                            const words = ["PROJECTS", "IDEAS", "RESEARCHES", "STARTUPS"];
+                            let index = 0;
+                            const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*";
 
-                                function scrambleText(newText) {
-                                    const oldText = header.innerText;
-                                    const length = Math.max(oldText.length, newText.length);
-                                    let frame = 0;
-                                    const duration = 20; // frames
+                            function scrambleText(newText) {
+                                const oldText = header.innerText;
+                                const length = Math.max(oldText.length, newText.length);
+                                let frame = 0;
+                                const duration = 20; // frames
 
-                                    const interval = setInterval(() => {
-                                        let result = "";
-                                        // Flicker effect
-                                        header.style.opacity = Math.random() > 0.8 ? '0.5' : '1';
+                                const interval = setInterval(() => {
+                                    let result = "";
+                                    // Flicker effect
+                                    header.style.opacity = Math.random() > 0.8 ? '0.5' : '1';
 
-                                        for (let i = 0; i < length; i++) {
-                                            if (i < newText.length && frame > (i / length) * duration + 5) {
-                                                result += newText[i];
-                                            } else {
-                                                result += chars[Math.floor(Math.random() * chars.length)];
-                                            }
+                                    for (let i = 0; i < length; i++) {
+                                        if (i < newText.length && frame > (i / length) * duration + 5) {
+                                            result += newText[i];
+                                        } else {
+                                            result += chars[Math.floor(Math.random() * chars.length)];
                                         }
+                                    }
 
-                                        header.innerText = result;
-                                        frame++;
+                                    header.innerText = result;
+                                    frame++;
 
-                                        if (frame > duration + 10) {
-                                            clearInterval(interval);
-                                            header.innerText = newText;
-                                            header.style.opacity = '1';
-                                        }
-                                    }, 30);
-                                }
+                                    if (frame > duration + 10) {
+                                        clearInterval(interval);
+                                        header.innerText = newText;
+                                        header.style.opacity = '1';
+                                    }
+                                }, 30);
+                            }
 
-                                setInterval(() => {
-                                    index = (index + 1) % words.length;
-                                    scrambleText(words[index]);
-                                }, 3000); // Change every 3 seconds
+                            setInterval(() => {
+                                index = (index + 1) % words.length;
+                                scrambleText(words[index]);
+                            }, 3000); // Change every 3 seconds
 
-                                // Remove CSS transition to allow rapid flicker
-                                header.style.transition = 'none';
-                            })();
+                            // Remove CSS transition to allow rapid flicker
+                            header.style.transition = 'none';
+                        })();
                     </script>
                 </div>
 
