@@ -1,0 +1,559 @@
+        html {
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+
+        :root {
+            --primary: #0066ff;
+        }
+
+        /* Utility for 3D card flips */
+        .backface-hidden {
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+        }
+
+        body {
+            cursor: none;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            height: 100vh;
+            overflow-y: hidden;
+        }
+
+        .scroll-container {
+            height: 100vh;
+            overflow-y: scroll;
+            /* Scroll snap removed for GSAP control */
+            /* scroll-snap-type: y mandatory; */
+            scroll-behavior: smooth;
+        }
+
+        .section {
+            /* scroll-snap-align: start; */
+            /* scroll-snap-stop: always; */
+            height: 100vh;
+            min-height: 100vh;
+            width: 100vw;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            /* transform: translateZ(0); Removed to allow GSAP pinning */
+            backface-visibility: hidden;
+            box-sizing: border-box;
+            contain: layout style;
+        }
+
+        .custom-cursor {
+            pointer-events: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: white;
+            mix-blend-mode: difference;
+            z-index: 9999;
+            will-change: transform;
+            backface-visibility: hidden;
+        }
+
+        .parallax-text {
+            will-change: transform;
+            backface-visibility: hidden;
+            transform-style: preserve-3d;
+        }
+
+        .glitch-text {
+            position: relative;
+            color: black;
+            --para-x: 0px;
+            --para-y: 0px;
+            transform: translate(var(--para-x), var(--para-y));
+            will-change: transform;
+            backface-visibility: hidden;
+        }
+
+        .glitch-text::before,
+        .glitch-text::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #0066ff;
+            overflow: hidden;
+        }
+
+        .glitch-text::before {
+            left: 2px;
+            text-shadow: -2px 0 #00FFFF;
+            clip-path: inset(20% 0 80% 0);
+            animation: glitch-anim-1 2s infinite linear alternate-reverse;
+            transform: translate(calc(var(--para-x) * 0.3), calc(var(--para-y) * 0.3));
+        }
+
+        .glitch-text::after {
+            left: -2px;
+            text-shadow: 2px 0 #FF00FF;
+            clip-path: inset(80% 0 20% 0);
+            animation: glitch-anim-2 2.5s infinite linear alternate-reverse;
+            transform: translate(calc(var(--para-x) * -0.2), calc(var(--para-y) * -0.2));
+        }
+
+        @keyframes glitch-anim-1 {
+            0% {
+                clip-path: inset(20% 0 80% 0);
+                transform: translate(-2px, 1px);
+            }
+
+            25% {
+                clip-path: inset(80% 0 5% 0);
+                transform: translate(2px, -1px);
+            }
+
+            50% {
+                clip-path: inset(25% 0 55% 0);
+                transform: translate(-1px, 2px);
+            }
+
+            75% {
+                clip-path: inset(50% 0 45% 0);
+                transform: translate(1px, -2px);
+            }
+
+            100% {
+                clip-path: inset(55% 0 20% 0);
+                transform: translate(0, 0);
+            }
+        }
+
+        @keyframes glitch-anim-2 {
+            0% {
+                clip-path: inset(15% 0 75% 0);
+                transform: translate(2px, -1px);
+            }
+
+            25% {
+                clip-path: inset(75% 0 10% 0);
+                transform: translate(-2px, 1px);
+            }
+
+            50% {
+                clip-path: inset(20% 0 60% 0);
+                transform: translate(1px, -2px);
+            }
+
+            75% {
+                clip-path: inset(45% 0 40% 0);
+                transform: translate(-1px, 2px);
+            }
+
+            100% {
+                clip-path: inset(50% 0 25% 0);
+                transform: translate(0, 0);
+            }
+        }
+
+        .scanlines {
+            background: repeating-linear-gradient(to bottom,
+                    transparent,
+                    transparent 3px,
+                    rgba(0, 0, 0, 0.08) 3px,
+                    rgba(0, 0, 0, 0.08) 4px);
+        }
+
+        .progress-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            height: 4px;
+            background: rgba(0, 0, 0, 0.2);
+            width: 100%;
+            z-index: 50;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: black;
+            transform-origin: left center;
+            will-change: transform;
+            backface-visibility: hidden;
+        }
+
+        /* Performance optimizations for low-end devices */
+        .low-performance * {
+            animation-duration: 0s !important;
+            transition-duration: 0s !important;
+        }
+
+        .low-performance .glitch-text::before,
+        .low-performance .glitch-text::after {
+            display: none;
+        }
+
+        /* Hardware acceleration for key elements */
+        .section {
+            scroll-snap-align: start;
+            height: 100vh;
+            min-height: 100vh;
+            width: 100vw;
+            position: relative;
+            overflow: hidden;
+            transform: translateZ(0);
+            backface-visibility: hidden;
+            box-sizing: border-box;
+            background-color: var(--primary);
+            /* Force background to hide previous sections */
+        }
+
+        /* Fix for overlapping sections */
+        .section:not(:first-child) {
+            margin-top: 0;
+        }
+
+        /* Scroll snap support block removed */
+
+        /* Fallback for browsers without scroll-snap */
+        @supports not (scroll-snap-type: y mandatory) {
+            .section {
+                position: relative;
+                display: block;
+            }
+        }
+
+        /* Floating animation with hardware acceleration */
+        @keyframes hoverFloat {
+
+            0%,
+            100% {
+                transform: translate3d(0, 0, 0);
+            }
+
+            50% {
+                transform: translate3d(10px, -10px, 0);
+            }
+        }
+
+        .cursor-follower {
+            animation: hoverFloat 3s ease-in-out infinite;
+            will-change: transform;
+            backface-visibility: hidden;
+        }
+
+        /* Enhanced Gallery Card Hover */
+        .gallery-card {
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: transform, opacity;
+        }
+
+        .gallery-card:hover {
+            transform: scale(1.05) translateY(-10px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            z-index: 50;
+        }
+
+
+
+        /* 3D Sphere Styles */
+        .sphere-wrapper {
+            position: relative;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            perspective: 2000px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .sphere-mover {
+            position: relative;
+            width: 600px;
+            height: 600px;
+            transform-style: preserve-3d;
+            animation: revolveSphere 10s infinite ease-in-out alternate;
+            will-change: transform;
+        }
+
+        .sphere-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 109%;
+            transform-style: preserve-3d;
+            animation: rotateSphere 15s infinite linear;
+        }
+
+        /* ... .sphere-card styles ... */
+        /* End Sphere Styles */
+
+        .sphere-card {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 140px;
+            height: 180px;
+            /* background/border moved to faces for flip effect */
+            background: transparent;
+            border: none;
+            box-shadow: none;
+            transform-style: preserve-3d;
+            backface-visibility: visible;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            pointer-events: auto;
+            /* Enable interaction */
+        }
+
+        .sphere-card.even {
+            cursor: pointer;
+        }
+
+        /* Pause rotation when hovering a card */
+        /* Pause rotation when hovering a card */
+        .sphere-card:hover~.sphere-container,
+        .sphere-container:hover {
+            animation-play-state: paused;
+        }
+
+        .sphere-card:hover {
+            z-index: 100;
+            /* Just ensure it's slightly elevated in stack but no huge transform */
+            /* We rely on overlay for the big view now */
+        }
+
+        /* Flip Logic & Hover Effects */
+        .flip-wrapper {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1);
+        }
+
+        /* Even cards: Flip animation inside the small card is fine, or we can disable it if overlay is enough.
+           Let's keep the flip on the small card as a micro-interaction. */
+        /* Removed hover flip to prevent messiness. Click interaction handles detailed view. */
+        /* .sphere-card.even:hover .flip-wrapper {
+            transform: rotateY(180deg);
+        } */
+
+        /* Odd cards: No huge scale */
+        .card-face {
+            transition: transform 0.4s ease;
+        }
+
+        .sphere-card.odd:hover .card-face {
+            /* Minimal lift */
+            transform: translateZ(20px);
+            box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.3);
+        }
+
+
+
+        .card-face {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            background: #0066ff;
+            border: 2px solid black;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        .card-face::after {
+            content: '';
+            position: absolute;
+            inset: 4px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            pointer-events: none;
+        }
+
+        .card-face.front {
+            z-index: 2;
+            transform: rotateY(0deg);
+        }
+
+        .card-face.back {
+            transform: rotateY(180deg);
+            background: #000;
+            color: #0066ff;
+            padding: 1rem;
+            text-align: center;
+            z-index: 1;
+            border-color: #0066ff;
+        }
+
+        /* Typography for Faces */
+        .card-face span.number {
+            font-size: 3rem;
+            font-weight: 900;
+            line-height: 1;
+        }
+
+        .card-face span.label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-top: 0.5rem;
+        }
+
+        .card-face span.sub {
+            font-size: 0.5rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            opacity: 0.6;
+            letter-spacing: 0.1em;
+        }
+
+        /* Back face text */
+        .card-face.back h3 {
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+            color: #0066ff;
+        }
+
+        .card-face.back p {
+            font-size: 0.5rem;
+            font-weight: 500;
+            line-height: 1.4;
+            color: #fff;
+            opacity: 0.8;
+        }
+
+        /* Odd Card (Image Holder) Specifics */
+        .sphere-card.odd .card-face.front {
+            padding: 0;
+            background: #000;
+            overflow: hidden;
+        }
+
+        .sphere-card.odd .card-face::after {
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .sphere-card.odd img.skill-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            /* Filter to assimilate with the red theme if needed, or keep original */
+            filter: grayscale(100%) contrast(1.2);
+            transition: filter 0.3s ease;
+        }
+
+        .sphere-card.odd:hover img.skill-img {
+            filter: grayscale(0%) contrast(1);
+        }
+
+        @keyframes rotateSphere {
+            0% {
+                transform: rotateY(0);
+            }
+
+            100% {
+                transform: rotateY(360deg);
+            }
+        }
+
+        @keyframes revolveSphere {
+            0% {
+                transform: rotateX(-15deg) rotateZ(-5deg) translateY(-100px);
+            }
+
+            30% {
+                transform: rotateX(45deg) rotateZ(25deg) translateY(-140px);
+            }
+
+            60% {
+                transform: rotateX(125deg) rotateZ(125deg) translateY(-60px);
+            }
+
+            100% {
+                transform: rotateX(-15deg) rotateZ(-5deg) translateY(-100px);
+            }
+        }
+
+        @media (max-width: 768px) {
+
+            .sphere-mover,
+            .sphere-container {
+                width: 300px;
+                height: 300px;
+            }
+
+            .sphere-card {
+                width: 80px;
+                height: 110px;
+            }
+
+            .card-face span.number {
+                font-size: 1.5rem;
+            }
+
+            .card-face span.label {
+                font-size: 0.5rem;
+            }
+        }
+
+        /* Text Flip Animation */
+        .char-wrapper {
+            display: inline-grid;
+            grid-template-areas: "stack";
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.6s cubic-bezier(0.4, 0.0, 0.2, 1);
+            align-items: baseline;
+            line-height: 1;
+            vertical-align: bottom;
+        }
+
+        .char-wrapper.flipping {
+            transform: rotateX(180deg);
+        }
+
+        .char-wrapper span {
+            grid-area: stack;
+            display: inline-block;
+            backface-visibility: hidden;
+            width: max-content;
+
+            /* Smooth sizing transition */
+            max-width: 2em;
+            /* Ensure it accommodates wide chars initially */
+            opacity: 1;
+            transition: max-width 0.4s ease-out 0.15s, opacity 0.4s ease-out 0.15s;
+            overflow: hidden;
+            vertical-align: baseline;
+            /* Align correctly during resize */
+        }
+
+        .char-wrapper span.collapsed {
+            max-width: 0;
+            opacity: 0;
+            padding: 0;
+        }
+
+        .char-wrapper .front {
+            transform: rotateX(0deg);
+        }
+
+        .char-wrapper .back {
+            transform: rotateX(180deg);
+        }

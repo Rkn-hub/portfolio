@@ -1,0 +1,1009 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#0066ff">
+    <meta name="color-scheme" content="light">
+    <!-- Performance hints -->
+    <link rel="dns-prefetch" href="//fonts.googleapis.com">
+    <link rel="dns-prefetch" href="//fonts.gstatic.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <title>Creative Developer Portfolio</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;900&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet">
+    <link rel="preload" href="https://fonts.gstatic.com/s/spacegrotesk/v16/V8mQoQDjQSkFtoMM3T6r8E7mF71Q-g.woff2"
+        as="font" type="font/woff2" crossorigin>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0066ff",
+                        "background-light": "#f8f5f6",
+                        "background-dark": "#230f13",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                },
+            },
+        } 
+    </script>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="bg-primary font-display text-black selection:bg-black selection:text-white"
+    style="margin: 0; padding: 0; overflow-x: hidden;">
+    <!-- Custom Cursor -->
+    <div class="custom-cursor"></div>
+
+    <!-- Scanlines Overlay -->
+    <div class="fixed inset-0 pointer-events-none z-40 scanlines"></div>
+
+    <!-- Progress Bar -->
+    <div class="progress-bar">
+        <div class="progress-fill" id="progressFill"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-6 left-6 z-50 mix-blend-multiply pointer-events-auto">
+        <div class="flex items-center gap-2">
+            <div
+                class="flex size-8 items-center justify-center rounded-full border-2 border-black bg-black text-primary">
+                <span class="material-symbols-outlined text-lg">code</span>
+            </div>
+            <span class="text-sm font-bold tracking-widest uppercase">PORTFOLIO '24</span>
+        </div>
+    </nav>
+
+
+
+    <!-- Main Container -->
+    <main class="scroll-container">
+        <!-- Section 1: Hero -->
+        <section class="section relative flex flex-col justify-between p-4 md:p-8" id="hero">
+            <div class="absolute inset-0 z-0 opacity-10 pointer-events-none"
+                style="background-image: radial-gradient(#000 1px, transparent 1px); background-size: 40px 40px;"></div>
+
+            <header class="flex w-full items-center justify-between z-10 mix-blend-hard-light text-black">
+                <div class="opacity-0 pointer-events-none">
+                    <!-- Spacer for layout balance -->
+                </div>
+                <nav class="hidden md:flex gap-8 text-sm font-bold tracking-widest uppercase">
+                    <a class="hover:underline decoration-2 underline-offset-4 cursor-pointer"
+                        onclick="scrollToSection('work')">Work</a>
+                    <a class="hover:underline decoration-2 underline-offset-4 cursor-pointer"
+                        onclick="scrollToSection('about')">About</a>
+                    <a class="hover:underline decoration-2 underline-offset-4 cursor-pointer"
+                        onclick="scrollToSection('contact')">Contact</a>
+                </nav>
+
+            </header>
+
+            <main class="flex-1 flex flex-col items-center justify-center relative z-10 pt-12">
+                <div class="group/title relative mb-24 text-center">
+                    <h1 class="flex flex-col items-center justify-center w-full text-center">
+                        <span id="hero-line-1"
+                            class="parallax-text block text-[12vw] md:text-[8vw] font-black text-black tracking-tighter scale-y-110 -mb-[1vw] md:-mb-[1.5vw] min-h-[1em]">
+                            Developer • Designer
+                        </span>
+                        <span id="hero-line-2"
+                            class="parallax-text block text-[12vw] md:text-[8vw] font-black text-black tracking-tighter scale-y-110 min-h-[1em]">
+                            Freelancer • AI Explorer
+                        </span>
+                        <span id="hero-line-3"
+                            class="parallax-text block text-[4vw] md:text-[2.5vw] font-bold text-black tracking-widest uppercase min-h-[1em] mt-2">
+                            &nbsp;
+                        </span>
+
+                        <!-- Subtext -->
+                        <p id="hero-subtext"
+                            class="block text-sm md:text-base font-medium text-black/80 mt-6 max-w-xl text-center leading-relaxed opacity-0 transition-all duration-1000 transform translate-y-4">
+                            I work at the intersection of code, design, and early-stage ideas.<br>
+                            From MVPs to experiments, I focus on building things that actually ship.
+                        </p>
+                    </h1>
+                </div>
+
+                <div
+                    class="absolute top-1/2 right-4 md:right-12 -translate-y-1/2 flex flex-col items-center gap-4 z-20 hidden lg:flex">
+                    <span class="writing-vertical text-xs font-bold tracking-[0.2em] text-black"
+                        style="writing-mode: vertical-rl; text-orientation: mixed;">SCROLL TO EXPLORE</span>
+                    <div class="h-24 w-[2px] bg-black/50"></div>
+                    <span class="material-symbols-outlined animate-bounce text-black">arrow_downward</span>
+                </div>
+            </main>
+
+            <footer class="flex w-full items-end justify-between pb-2 z-50 text-black">
+                <div
+                    class="absolute left-1/2 bottom-8 -translate-x-1/2 flex items-center gap-3 opacity-60 hover:opacity-100 transition-opacity cursor-grab active:cursor-grabbing">
+                    <span class="material-symbols-outlined text-xl">drag_pan</span>
+                    <span class="text-xs font-bold tracking-[0.25em]">Scroll to explore</span>
+                </div>
+                <div class="flex items-center gap-3 ml-auto">
+                    <div class="text-right hidden sm:block">
+                        <p class="text-xs font-bold uppercase tracking-wide">Available for</p>
+                        <p class="text-xs font-bold uppercase tracking-wide">Freelance & Collaboration</p>
+                    </div>
+                    <div class="relative flex size-3">
+                        <span
+                            class="animate-ping absolute inline-flex h-full w-full rounded-full bg-black opacity-75"></span>
+                        <span class="relative inline-flex rounded-full size-3 bg-black"></span>
+                    </div>
+                </div>
+            </footer>
+        </section>
+
+        <!-- Section 2: Work Grid -->
+        <section class="section relative flex flex-col justify-center items-center overflow-hidden bg-primary z-20"
+            id="work">
+            <div class="absolute inset-0 z-0 opacity-5 pointer-events-none"
+                style="background-image: linear-gradient(#000 1px, transparent 1px), linear-gradient(90deg, #000 1px, transparent 1px); background-size: 50px 50px;">
+            </div>
+
+            <div class="gallery-wrapper relative w-full h-full flex items-center justify-center overflow-hidden">
+                <!-- Initial Title -->
+                <h2
+                    class="work-title absolute z-20 text-[12vw] md:text-[8vw] font-black text-black tracking-tighter text-center mix-blend-multiply pointer-events-none">
+                    Selected Work
+                </h2>
+
+
+                <div
+                    class="gallery-container flex flex-col gap-4 md:gap-8 opacity-0 scale-50 origin-center will-change-transform">
+                    <!-- Row 1 -->
+                    <div class="gallery-row row-odd flex gap-4 md:gap-8 w-max items-center">
+                        <div
+                            class="gallery-card w-[60vw] md:w-[22vw] aspect-[4/3] bg-black border-4 border-black relative overflow-hidden shrink-0 transition-colors group cursor-pointer">
+                            <img loading="lazy" decoding="async" src="gallery/3dmodel/1 (1).png" alt="3D Model 1"
+                                class="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-opacity duration-500">
+
+                            <div
+                                class="absolute bottom-4 left-4 font-bold uppercase text-xs md:text-sm text-white group-hover:text-primary transition-colors z-10 px-2 py-1 bg-black/60 backdrop-blur-sm">
+                                3D Model 1</div>
+                        </div>
+                        <div
+                            class="gallery-card w-[60vw] md:w-[22vw] aspect-[4/3] bg-black border-4 border-black relative overflow-hidden shrink-0 transition-colors group cursor-pointer">
+                            <img loading="lazy" decoding="async" src="gallery/3dmodel/1 (2).jpeg" alt="3D Model 2"
+                                class="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-opacity duration-500">
+
+                            <div
+                                class="absolute bottom-4 left-4 font-bold uppercase text-xs md:text-sm text-white group-hover:text-primary transition-colors z-10 px-2 py-1 bg-black/60 backdrop-blur-sm">
+                                3D Model 2</div>
+                        </div>
+                        <div
+                            class="gallery-card w-[60vw] md:w-[22vw] aspect-[4/3] bg-black border-4 border-black relative overflow-hidden shrink-0 transition-colors group cursor-pointer">
+                            <img loading="lazy" decoding="async" src="gallery/3dmodel/1 (2).png" alt="3D Model 3"
+                                class="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-opacity duration-500">
+
+                            <div
+                                class="absolute bottom-4 left-4 font-bold uppercase text-xs md:text-sm text-white group-hover:text-primary transition-colors z-10 px-2 py-1 bg-black/60 backdrop-blur-sm">
+                                3D Model 3</div>
+                        </div>
+                        <div
+                            class="gallery-card w-[60vw] md:w-[22vw] aspect-[4/3] bg-black border-4 border-black relative overflow-hidden shrink-0 transition-colors group cursor-pointer">
+                            <img loading="lazy" decoding="async" src="gallery/3dmodel/1 (3).jpeg" alt="3D Model 4"
+                                class="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-opacity duration-500">
+
+                            <div
+                                class="absolute bottom-4 left-4 font-bold uppercase text-xs md:text-sm text-white group-hover:text-primary transition-colors z-10 px-2 py-1 bg-black/60 backdrop-blur-sm">
+                                3D Model 4</div>
+                        </div>
+                        <div
+                            class="gallery-card w-[60vw] md:w-[22vw] aspect-[4/3] bg-black border-4 border-black relative overflow-hidden shrink-0 transition-colors group cursor-pointer">
+                            <img loading="lazy" decoding="async" src="gallery/3dmodel/1 (3).png" alt="3D Model 5"
+                                class="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-opacity duration-500">
+
+                            <div
+                                class="absolute bottom-4 left-4 font-bold uppercase text-xs md:text-sm text-white group-hover:text-primary transition-colors z-10 px-2 py-1 bg-black/60 backdrop-blur-sm">
+                                3D Model 5</div>
+                        </div>
+                        <div
+                            class="gallery-card w-[60vw] md:w-[22vw] aspect-[4/3] bg-black border-4 border-black relative overflow-hidden shrink-0 transition-colors group cursor-pointer">
+                            <img loading="lazy" decoding="async" src="gallery/3dmodel/1 (4).jpeg" alt="3D Model 6"
+                                class="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-opacity duration-500">
+
+                            <div
+                                class="absolute bottom-4 left-4 font-bold uppercase text-xs md:text-sm text-white group-hover:text-primary transition-colors z-10 px-2 py-1 bg-black/60 backdrop-blur-sm">
+                                3D Model 6</div>
+                        </div>
+                        <div
+                            class="gallery-card w-[60vw] md:w-[22vw] aspect-[4/3] bg-black border-4 border-black relative overflow-hidden shrink-0 transition-colors group cursor-pointer">
+                            <img loading="lazy" decoding="async" src="gallery/3dmodel/1 (4).png" alt="3D Model 7"
+                                class="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-opacity duration-500">
+
+                            <div
+                                class="absolute bottom-4 left-4 font-bold uppercase text-xs md:text-sm text-white group-hover:text-primary transition-colors z-10 px-2 py-1 bg-black/60 backdrop-blur-sm">
+                                3D Model 7</div>
+                        </div>
+                        <div
+                            class="gallery-card w-[60vw] md:w-[22vw] aspect-[4/3] bg-black border-4 border-black relative overflow-hidden shrink-0 transition-colors group cursor-pointer">
+                            <img loading="lazy" decoding="async" src="gallery/3dmodel/1 (5).jpeg" alt="3D Model 8"
+                                class="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-opacity duration-500">
+
+                            <div
+                                class="absolute bottom-4 left-4 font-bold uppercase text-xs md:text-sm text-white group-hover:text-primary transition-colors z-10 px-2 py-1 bg-black/60 backdrop-blur-sm">
+                                3D Model 8</div>
+                        </div>
+                        <div
+                            class="gallery-card w-[60vw] md:w-[22vw] aspect-[4/3] bg-black border-4 border-black relative overflow-hidden shrink-0 transition-colors group cursor-pointer">
+                            <img loading="lazy" decoding="async" src="gallery/3dmodel/1 (5).png" alt="3D Model 9"
+                                class="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-opacity duration-500">
+
+                            <div
+                                class="absolute bottom-4 left-4 font-bold uppercase text-xs md:text-sm text-white group-hover:text-primary transition-colors z-10 px-2 py-1 bg-black/60 backdrop-blur-sm">
+                                3D Model 9</div>
+                        </div>
+                    </div>
+                    <!-- Row 2 -->
+                    <div class="gallery-row row-even flex gap-4 md:gap-8 w-max items-center -ml-[11vw]">
+                        <div
+                            class="gallery-card w-[60vw] md:w-[22vw] aspect-[4/3] bg-black border-4 border-black relative overflow-hidden shrink-0 transition-colors group cursor-pointer">
+                            <img loading="lazy" decoding="async" src="gallery/ui/screen (10).png" alt="UI 1"
+                                class="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-opacity duration-500">
+
+                            <div
+                                class="absolute bottom-4 left-4 font-bold uppercase text-xs md:text-sm text-white group-hover:text-primary transition-colors z-10 px-2 py-1 bg-black/60 backdrop-blur-sm">
+                                UI Design 1</div>
+                        </div>
+                        <div
+                            class="gallery-card w-[60vw] md:w-[22vw] aspect-[4/3] bg-black border-4 border-black relative overflow-hidden shrink-0 transition-colors group cursor-pointer">
+                            <img loading="lazy" decoding="async" src="gallery/ui/screen (11).png" alt="UI 2"
+                                class="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-opacity duration-500">
+
+                            <div
+                                class="absolute bottom-4 left-4 font-bold uppercase text-xs md:text-sm text-white group-hover:text-primary transition-colors z-10 px-2 py-1 bg-black/60 backdrop-blur-sm">
+                                UI Design 2</div>
+                        </div>
+                        <div
+                            class="gallery-card w-[60vw] md:w-[22vw] aspect-[4/3] bg-black border-4 border-black relative overflow-hidden shrink-0 transition-colors group cursor-pointer">
+                            <img loading="lazy" decoding="async" src="gallery/ui/screen (12).png" alt="UI 3"
+                                class="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-opacity duration-500">
+
+                            <div
+                                class="absolute bottom-4 left-4 font-bold uppercase text-xs md:text-sm text-white group-hover:text-primary transition-colors z-10 px-2 py-1 bg-black/60 backdrop-blur-sm">
+                                UI Design 3</div>
+                        </div>
+                        <div
+                            class="gallery-card w-[60vw] md:w-[22vw] aspect-[4/3] bg-black border-4 border-black relative overflow-hidden shrink-0 transition-colors group cursor-pointer">
+                            <img loading="lazy" decoding="async" src="gallery/ui/screen (16).png" alt="UI 4"
+                                class="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-opacity duration-500">
+
+                            <div
+                                class="absolute bottom-4 left-4 font-bold uppercase text-xs md:text-sm text-white group-hover:text-primary transition-colors z-10 px-2 py-1 bg-black/60 backdrop-blur-sm">
+                                UI Design 4</div>
+                        </div>
+                        <div
+                            class="gallery-card w-[60vw] md:w-[22vw] aspect-[4/3] bg-black border-4 border-black relative overflow-hidden shrink-0 transition-colors group cursor-pointer">
+                            <img loading="lazy" decoding="async" src="gallery/ui/screen (2).png" alt="UI 5"
+                                class="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-opacity duration-500">
+
+                            <div
+                                class="absolute bottom-4 left-4 font-bold uppercase text-xs md:text-sm text-white group-hover:text-primary transition-colors z-10 px-2 py-1 bg-black/60 backdrop-blur-sm">
+                                UI Design 5</div>
+                        </div>
+                        <div
+                            class="gallery-card w-[60vw] md:w-[22vw] aspect-[4/3] bg-black border-4 border-black relative overflow-hidden shrink-0 transition-colors group cursor-pointer">
+                            <img loading="lazy" decoding="async" src="gallery/ui/screen (3).png" alt="UI 6"
+                                class="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-opacity duration-500">
+
+                            <div
+                                class="absolute bottom-4 left-4 font-bold uppercase text-xs md:text-sm text-white group-hover:text-primary transition-colors z-10 px-2 py-1 bg-black/60 backdrop-blur-sm">
+                                UI Design 6</div>
+                        </div>
+                        <div
+                            class="gallery-card w-[60vw] md:w-[22vw] aspect-[4/3] bg-black border-4 border-black relative overflow-hidden shrink-0 transition-colors group cursor-pointer">
+                            <img loading="lazy" decoding="async" src="gallery/ui/screen (9).png" alt="UI 7"
+                                class="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-opacity duration-500">
+
+                            <div
+                                class="absolute bottom-4 left-4 font-bold uppercase text-xs md:text-sm text-white group-hover:text-primary transition-colors z-10 px-2 py-1 bg-black/60 backdrop-blur-sm">
+                                UI Design 7</div>
+                        </div>
+                    </div>
+                    <!-- Row 3 -->
+                    <div class="gallery-row row-odd flex gap-4 md:gap-8 w-max items-center">
+                        <div
+                            class="gallery-card w-[60vw] md:w-[22vw] aspect-[4/3] bg-black border-4 border-black relative overflow-hidden shrink-0 transition-colors group cursor-pointer">
+                            <img loading="lazy" decoding="async" src="gallery/certificate/3 (1).jpeg" alt="Cert 1"
+                                class="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-opacity duration-500">
+
+                            <div
+                                class="absolute bottom-4 left-4 font-bold uppercase text-xs md:text-sm text-white group-hover:text-primary transition-colors z-10 px-2 py-1 bg-black/60 backdrop-blur-sm">
+                                Certificate 1</div>
+                        </div>
+                        <div
+                            class="gallery-card w-[60vw] md:w-[22vw] aspect-[4/3] bg-black border-4 border-black relative overflow-hidden shrink-0 transition-colors group cursor-pointer">
+                            <img loading="lazy" decoding="async" src="gallery/certificate/3 (2).jpeg" alt="Cert 2"
+                                class="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-opacity duration-500">
+
+                            <div
+                                class="absolute bottom-4 left-4 font-bold uppercase text-xs md:text-sm text-white group-hover:text-primary transition-colors z-10 px-2 py-1 bg-black/60 backdrop-blur-sm">
+                                Certificate 2</div>
+                        </div>
+                        <div
+                            class="gallery-card w-[60vw] md:w-[22vw] aspect-[4/3] bg-black border-4 border-black relative overflow-hidden shrink-0 transition-colors group cursor-pointer">
+                            <img loading="lazy" decoding="async" src="gallery/certificate/3 (3).jpeg" alt="Cert 3"
+                                class="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-opacity duration-500">
+
+                            <div
+                                class="absolute bottom-4 left-4 font-bold uppercase text-xs md:text-sm text-white group-hover:text-primary transition-colors z-10 px-2 py-1 bg-black/60 backdrop-blur-sm">
+                                Certificate 3</div>
+                        </div>
+                        <div
+                            class="gallery-card w-[60vw] md:w-[22vw] aspect-[4/3] bg-black border-4 border-black relative overflow-hidden shrink-0 transition-colors group cursor-pointer">
+                            <img loading="lazy" decoding="async" src="gallery/certificate/3 (4).jpeg" alt="Cert 4"
+                                class="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-opacity duration-500">
+
+                            <div
+                                class="absolute bottom-4 left-4 font-bold uppercase text-xs md:text-sm text-white group-hover:text-primary transition-colors z-10 px-2 py-1 bg-black/60 backdrop-blur-sm">
+                                Certificate 4</div>
+                        </div>
+                        <div
+                            class="gallery-card w-[60vw] md:w-[22vw] aspect-[4/3] bg-black border-4 border-black relative overflow-hidden shrink-0 transition-colors group cursor-pointer">
+                            <img loading="lazy" decoding="async" src="gallery/certificate/3 (5).jpeg" alt="Cert 5"
+                                class="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-opacity duration-500">
+
+                            <div
+                                class="absolute bottom-4 left-4 font-bold uppercase text-xs md:text-sm text-white group-hover:text-primary transition-colors z-10 px-2 py-1 bg-black/60 backdrop-blur-sm">
+                                Certificate 5</div>
+                        </div>
+                        <div
+                            class="gallery-card w-[60vw] md:w-[22vw] aspect-[4/3] bg-black border-4 border-black relative overflow-hidden shrink-0 transition-colors group cursor-pointer">
+                            <img loading="lazy" decoding="async" src="gallery/certificate/3 (6).jpeg" alt="Cert 6"
+                                class="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-opacity duration-500">
+
+                            <div
+                                class="absolute bottom-4 left-4 font-bold uppercase text-xs md:text-sm text-white group-hover:text-primary transition-colors z-10 px-2 py-1 bg-black/60 backdrop-blur-sm">
+                                Certificate 6</div>
+                        </div>
+                        <div
+                            class="gallery-card w-[60vw] md:w-[22vw] aspect-[4/3] bg-black border-4 border-black relative overflow-hidden shrink-0 transition-colors group cursor-pointer">
+                            <img loading="lazy" decoding="async" src="gallery/certificate/3 (7).jpeg" alt="Cert 7"
+                                class="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-opacity duration-500">
+
+                            <div
+                                class="absolute bottom-4 left-4 font-bold uppercase text-xs md:text-sm text-white group-hover:text-primary transition-colors z-10 px-2 py-1 bg-black/60 backdrop-blur-sm">
+                                Certificate 7</div>
+                        </div>
+                        <div
+                            class="gallery-card w-[60vw] md:w-[22vw] aspect-[4/3] bg-black border-4 border-black relative overflow-hidden shrink-0 transition-colors group cursor-pointer">
+                            <img loading="lazy" decoding="async" src="gallery/certificate/3 (8).jpeg" alt="Cert 8"
+                                class="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-opacity duration-500">
+
+                            <div
+                                class="absolute bottom-4 left-4 font-bold uppercase text-xs md:text-sm text-white group-hover:text-primary transition-colors z-10 px-2 py-1 bg-black/60 backdrop-blur-sm">
+                                Certificate 8</div>
+                        </div>
+                        <div
+                            class="gallery-card w-[60vw] md:w-[22vw] aspect-[4/3] bg-black border-4 border-black relative overflow-hidden shrink-0 transition-colors group cursor-pointer">
+                            <img loading="lazy" decoding="async" src="gallery/certificate/3 (9).jpeg" alt="Cert 9"
+                                class="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-opacity duration-500">
+
+                            <div
+                                class="absolute bottom-4 left-4 font-bold uppercase text-xs md:text-sm text-white group-hover:text-primary transition-colors z-10 px-2 py-1 bg-black/60 backdrop-blur-sm">
+                                Certificate 9</div>
+                        </div>
+                        <div
+                            class="gallery-card w-[60vw] md:w-[22vw] aspect-[4/3] bg-black border-4 border-black relative overflow-hidden shrink-0 transition-colors group cursor-pointer">
+                            <img loading="lazy" decoding="async" src="gallery/certificate/3 (10).jpeg" alt="Cert 10"
+                                class="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-opacity duration-500">
+
+                            <div
+                                class="absolute bottom-4 left-4 font-bold uppercase text-xs md:text-sm text-white group-hover:text-primary transition-colors z-10 px-2 py-1 bg-black/60 backdrop-blur-sm">
+                                Certificate 10</div>
+                        </div>
+                        <div
+                            class="gallery-card w-[60vw] md:w-[22vw] aspect-[4/3] bg-black border-4 border-black relative overflow-hidden shrink-0 transition-colors group cursor-pointer">
+                            <img loading="lazy" decoding="async" src="gallery/certificate/3 (11).jpeg" alt="Cert 11"
+                                class="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-opacity duration-500">
+
+                            <div
+                                class="absolute bottom-4 left-4 font-bold uppercase text-xs md:text-sm text-white group-hover:text-primary transition-colors z-10 px-2 py-1 bg-black/60 backdrop-blur-sm">
+                                Certificate 11</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Vanguarr (Skills Sphere) -->
+        <section class="section relative flex flex-col bg-primary z-30" id="vanguarr">
+            <div
+                class="relative z-10 flex flex-col items-center justify-center text-center group/title cursor-default mb-12">
+                <h1 class="text-black text-[10vw] md:text-[8vw] font-black leading-[0.9] tracking-tighter transition-transform duration-700 ease-out group-hover/title:scale-105"
+                    style="letter-spacing: -0.04em;">
+                    <span class="inline-block" id="parallax-text">Skills & Focus Areas</span>
+                </h1>
+
+                <p class="mt-6 text-sm md:text-base text-black/70 font-medium max-w-lg text-center leading-relaxed">
+                    I'm not tool-obsessed. I focus on understanding problems, then choosing the right tools to solve
+                    them.
+                </p>
+
+                <div
+                    class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 scale-50 transition-all duration-300 group-hover/title:opacity-100 group-hover/title:scale-100 pointer-events-none">
+                </div>
+            </div>
+
+            <div class="sphere-wrapper" id="sphereWrapper">
+                <div class="sphere-mover" id="sphereMover">
+                    <div class="sphere-container" id="sphereContainer">
+                        <!-- Cards will be injected here via JS -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="absolute left-4 top-1/2 -translate-y-1/2 hidden md:flex flex-col items-center gap-4 z-20">
+                <button class="group p-2 rounded hover:bg-black/10 transition-colors" onclick="scrollToSection('work')">
+                    <span
+                        class="material-symbols-outlined text-black text-4xl group-hover:-translate-x-1 transition-transform">west</span>
+                </button>
+            </div>
+
+            <div class="absolute right-4 top-1/2 -translate-y-1/2 hidden md:flex flex-col items-center gap-4 z-20">
+                <button class="group p-2 rounded hover:bg-black/10 transition-colors"
+                    onclick="scrollToSection('projects')">
+                    <span
+                        class="material-symbols-outlined text-black text-4xl group-hover:translate-x-1 transition-transform">east</span>
+                </button>
+            </div>
+        </section>
+        <!-- Section 4: Project -->
+        <section class="section relative flex flex-col justify-between p-6 md:p-12" id="projects"
+            style="cursor: crosshair; z-index: 10;">
+            <div class="absolute inset-0 pointer-events-none z-0 opacity-10"
+                style="background-image: linear-gradient(#000 1px, transparent 1px), linear-gradient(90deg, #000 1px, transparent 1px); background-size: 100px 100px;">
+            </div>
+
+            <header class="flex items-start justify-between w-full z-10">
+                <div class="flex flex-col gap-1 group cursor-pointer">
+                    <div class="flex items-center gap-2 text-black">
+                        <span class="material-symbols-outlined text-3xl">token</span>
+                        <span class="text-xl font-bold tracking-tight">PROJECTS & RESEARCH</span>
+                    </div>
+                    <span class="text-xs font-mono text-black/60 tracking-widest">WORK_SHOWCASE</span>
+                </div>
+
+                <div class="hidden md:flex flex-col items-end text-right">
+                    <div class="flex items-center gap-2">
+                        <span class="h-px w-8 bg-black"></span>
+                        <span class="text-sm font-bold text-black tracking-widest uppercase">Focus</span>
+                    </div>
+                    <p class="text-2xl font-bold text-black mt-1 uppercase">Product • Design • AI</p>
+                    <p class="text-xs font-mono text-black/60">SHIPPED & RESEARCH</p>
+                </div>
+            </header>
+
+            <main class="flex-1 flex flex-col justify-center items-center relative w-full">
+                <div
+                    class="absolute top-0 right-0 md:top-10 md:right-20 rotate-90 origin-right translate-x-1/2 md:translate-x-0 hidden lg:block">
+                    <div class="flex items-center gap-3">
+                        <span class="text-xs font-mono font-bold text-black/50">PROJECT_TYPE</span>
+                        <span class="text-sm font-bold text-black tracking-widest uppercase">WebGL Experience</span>
+                    </div>
+                </div>
+
+                <div class="relative z-20 text-center mix-blend-normal">
+                    <h1 id="dynamic-header"
+                        class="text-[18vw] md:text-[14vw] leading-[0.8] font-black tracking-tighter text-black select-none pointer-events-none transform skew-x-[-2deg]">
+                        PROJECTS
+                    </h1>
+                    <script>
+                            (function () {
+                                const header = document.getElementById('dynamic-header');
+                                const words = ["PROJECTS", "IDEAS", "RESEARCHES", "STARTUPS"];
+                                let index = 0;
+                                const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*";
+
+                                function scrambleText(newText) {
+                                    const oldText = header.innerText;
+                                    const length = Math.max(oldText.length, newText.length);
+                                    let frame = 0;
+                                    const duration = 20; // frames
+
+                                    const interval = setInterval(() => {
+                                        let result = "";
+                                        // Flicker effect
+                                        header.style.opacity = Math.random() > 0.8 ? '0.5' : '1';
+
+                                        for (let i = 0; i < length; i++) {
+                                            if (i < newText.length && frame > (i / length) * duration + 5) {
+                                                result += newText[i];
+                                            } else {
+                                                result += chars[Math.floor(Math.random() * chars.length)];
+                                            }
+                                        }
+
+                                        header.innerText = result;
+                                        frame++;
+
+                                        if (frame > duration + 10) {
+                                            clearInterval(interval);
+                                            header.innerText = newText;
+                                            header.style.opacity = '1';
+                                        }
+                                    }, 30);
+                                }
+
+                                setInterval(() => {
+                                    index = (index + 1) % words.length;
+                                    scrambleText(words[index]);
+                                }, 3000); // Change every 3 seconds
+
+                                // Remove CSS transition to allow rapid flicker
+                                header.style.transition = 'none';
+                            })();
+                    </script>
+                </div>
+
+                <!-- Project Cards Grid: 2 rows x 5 cards -->
+                <div class="grid grid-cols-5 gap-3 w-full max-w-5xl px-4 z-20 mt-6">
+                    <!-- Row 1 -->
+                    <div class="project-card group cursor-pointer" style="perspective: 1000px;">
+                        <div class="project-card-inner relative w-full aspect-[4/5] transition-transform duration-500 group-hover:[transform:rotateY(180deg)]"
+                            style="transform-style: preserve-3d;">
+                            <div
+                                class="project-card-front absolute inset-0 bg-black flex items-center justify-center p-3 backface-hidden">
+                                <span
+                                    class="text-white font-black text-sm md:text-base text-center uppercase tracking-tight">Extoll</span>
+                            </div>
+                            <div class="project-card-back absolute inset-0 bg-primary border-2 border-black flex items-center justify-center p-2 backface-hidden"
+                                style="transform: rotateY(180deg);">
+                                <p class="text-black text-[10px] md:text-xs font-bold text-center leading-tight">
+                                    Freelance platform for top designers & devs.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-card group cursor-pointer" style="perspective: 1000px;">
+                        <div class="project-card-inner relative w-full aspect-[4/5] transition-transform duration-500 group-hover:[transform:rotateY(180deg)]"
+                            style="transform-style: preserve-3d;">
+                            <div
+                                class="project-card-front absolute inset-0 bg-black flex items-center justify-center p-3 backface-hidden">
+                                <span
+                                    class="text-white font-black text-sm md:text-base text-center uppercase tracking-tight">Marketplace</span>
+                            </div>
+                            <div class="project-card-back absolute inset-0 bg-primary border-2 border-black flex items-center justify-center p-2 backface-hidden"
+                                style="transform: rotateY(180deg);">
+                                <p class="text-black text-[10px] md:text-xs font-bold text-center leading-tight">B2B
+                                    marketplace for startup procurement.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-card group cursor-pointer" style="perspective: 1000px;">
+                        <div class="project-card-inner relative w-full aspect-[4/5] transition-transform duration-500 group-hover:[transform:rotateY(180deg)]"
+                            style="transform-style: preserve-3d;">
+                            <div
+                                class="project-card-front absolute inset-0 bg-black flex items-center justify-center p-3 backface-hidden">
+                                <span
+                                    class="text-white font-black text-sm md:text-base text-center uppercase tracking-tight">Startup
+                                    Ops</span>
+                            </div>
+                            <div class="project-card-back absolute inset-0 bg-primary border-2 border-black flex items-center justify-center p-2 backface-hidden"
+                                style="transform: rotateY(180deg);">
+                                <p class="text-black text-[10px] md:text-xs font-bold text-center leading-tight">Ops
+                                    systems for high-growth teams.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-card group cursor-pointer" style="perspective: 1000px;">
+                        <div class="project-card-inner relative w-full aspect-[4/5] transition-transform duration-500 group-hover:[transform:rotateY(180deg)]"
+                            style="transform-style: preserve-3d;">
+                            <div
+                                class="project-card-front absolute inset-0 bg-black flex items-center justify-center p-3 backface-hidden">
+                                <span
+                                    class="text-white font-black text-sm md:text-base text-center uppercase tracking-tight">AI
+                                    Realism</span>
+                            </div>
+                            <div class="project-card-back absolute inset-0 bg-primary border-2 border-black flex items-center justify-center p-2 backface-hidden"
+                                style="transform: rotateY(180deg);">
+                                <p class="text-black text-[10px] md:text-xs font-bold text-center leading-tight">
+                                    Research on synthetic data & AI accuracy.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-card group cursor-pointer" style="perspective: 1000px;">
+                        <div class="project-card-inner relative w-full aspect-[4/5] transition-transform duration-500 group-hover:[transform:rotateY(180deg)]"
+                            style="transform-style: preserve-3d;">
+                            <div
+                                class="project-card-front absolute inset-0 bg-black flex items-center justify-center p-3 backface-hidden">
+                                <span
+                                    class="text-white font-black text-sm md:text-base text-center uppercase tracking-tight">Sustainable
+                                    Twin</span>
+                            </div>
+                            <div class="project-card-back absolute inset-0 bg-primary border-2 border-black flex items-center justify-center p-2 backface-hidden"
+                                style="transform: rotateY(180deg);">
+                                <p class="text-black text-[10px] md:text-xs font-bold text-center leading-tight">Digital
+                                    twins for environmental impact.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Row 2 -->
+                    <div class="project-card group cursor-pointer" style="perspective: 1000px;">
+                        <div class="project-card-inner relative w-full aspect-[4/5] transition-transform duration-500 group-hover:[transform:rotateY(180deg)]"
+                            style="transform-style: preserve-3d;">
+                            <div
+                                class="project-card-front absolute inset-0 bg-black flex items-center justify-center p-3 backface-hidden">
+                                <span
+                                    class="text-white font-black text-sm md:text-base text-center uppercase tracking-tight">Cancer
+                                    Detection</span>
+                            </div>
+                            <div class="project-card-back absolute inset-0 bg-primary border-2 border-black flex items-center justify-center p-2 backface-hidden"
+                                style="transform: rotateY(180deg);">
+                                <p class="text-black text-[10px] md:text-xs font-bold text-center leading-tight">AI
+                                    models for early-stage diagnostics.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-card group cursor-pointer" style="perspective: 1000px;">
+                        <div class="project-card-inner relative w-full aspect-[4/5] transition-transform duration-500 group-hover:[transform:rotateY(180deg)]"
+                            style="transform-style: preserve-3d;">
+                            <div
+                                class="project-card-front absolute inset-0 bg-black flex items-center justify-center p-3 backface-hidden">
+                                <span
+                                    class="text-white font-black text-sm md:text-base text-center uppercase tracking-tight">Sustainable
+                                    RO</span>
+                            </div>
+                            <div class="project-card-back absolute inset-0 bg-primary border-2 border-black flex items-center justify-center p-2 backface-hidden"
+                                style="transform: rotateY(180deg);">
+                                <p class="text-black text-[10px] md:text-xs font-bold text-center leading-tight">Smart
+                                    water purification system.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-card group cursor-pointer" style="perspective: 1000px;">
+                        <div class="project-card-inner relative w-full aspect-[4/5] transition-transform duration-500 group-hover:[transform:rotateY(180deg)]"
+                            style="transform-style: preserve-3d;">
+                            <div
+                                class="project-card-front absolute inset-0 bg-black flex items-center justify-center p-3 backface-hidden">
+                                <span
+                                    class="text-white font-black text-sm md:text-base text-center uppercase tracking-tight">Edu-Tech
+                                    App</span>
+                            </div>
+                            <div class="project-card-back absolute inset-0 bg-primary border-2 border-black flex items-center justify-center p-2 backface-hidden"
+                                style="transform: rotateY(180deg);">
+                                <p class="text-black text-[10px] md:text-xs font-bold text-center leading-tight">
+                                    Interactive
+                                    learning platform for personalized education.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-card group cursor-pointer" style="perspective: 1000px;">
+                        <div class="project-card-inner relative w-full aspect-[4/5] transition-transform duration-500 group-hover:[transform:rotateY(180deg)]"
+                            style="transform-style: preserve-3d;">
+                            <div
+                                class="project-card-front absolute inset-0 bg-black flex items-center justify-center p-3 backface-hidden">
+                                <span
+                                    class="text-white font-black text-sm md:text-base text-center uppercase tracking-tight">UI
+                                    Experiments</span>
+                            </div>
+                            <div class="project-card-back absolute inset-0 bg-primary border-2 border-black flex items-center justify-center p-2 backface-hidden"
+                                style="transform: rotateY(180deg);">
+                                <p class="text-black text-[10px] md:text-xs font-bold text-center leading-tight">
+                                    Experimental UI components.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-card group cursor-pointer" style="perspective: 1000px;">
+                        <div class="project-card-inner relative w-full aspect-[4/5] transition-transform duration-500 group-hover:[transform:rotateY(180deg)]"
+                            style="transform-style: preserve-3d;">
+                            <div
+                                class="project-card-front absolute inset-0 bg-black flex items-center justify-center p-3 backface-hidden">
+                                <span
+                                    class="text-white font-black text-sm md:text-base text-center uppercase tracking-tight">More
+                                    Soon</span>
+                            </div>
+                            <div class="project-card-back absolute inset-0 bg-primary border-2 border-black flex items-center justify-center p-2 backface-hidden"
+                                style="transform: rotateY(180deg);">
+                                <p class="text-black text-[10px] md:text-xs font-bold text-center leading-tight">New
+                                    projects coming soon.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                    <div class="w-[80vw] h-[1px] bg-black/20"></div>
+                    <div class="h-[60vh] w-[1px] bg-black/20 absolute"></div>
+                </div>
+            </main>
+
+            <footer class="flex items-end justify-between w-full relative z-10">
+                <div class="hidden md:flex gap-12 absolute left-1/2 bottom-2 -translate-x-1/2 items-center">
+                    <button
+                        class="group flex flex-col items-center gap-2 opacity-50 hover:opacity-100 transition-opacity"
+                        onclick="scrollToSection('vanguarr')">
+                        <span
+                            class="material-symbols-outlined text-4xl text-black group-hover:-translate-x-2 transition-transform">west</span>
+                        <span class="text-xs font-mono font-bold text-black">PREV</span>
+                    </button>
+                    <div class="h-12 w-px bg-black/20"></div>
+                    <button class="group flex flex-col items-center gap-2 hover:opacity-100 transition-opacity"
+                        onclick="scrollToSection('about')">
+                        <span
+                            class="material-symbols-outlined text-4xl text-black group-hover:translate-x-2 transition-transform">east</span>
+                        <span class="text-xs font-mono font-bold text-black">NEXT</span>
+                    </button>
+                </div>
+
+                <div class="flex flex-col items-end gap-4 z-20 ml-auto">
+                    <p class="hidden md:block text-xs font-mono text-black max-w-[200px] text-right">
+                        A mix of shipped projects, experiments, and research explorations.
+                    </p>
+                    <a class="group relative inline-flex items-center justify-center gap-3 bg-black text-primary px-8 py-4 overflow-hidden rounded-sm transition-all hover:bg-white hover:text-black"
+                        href="#">
+                        <span class="relative z-10 font-bold tracking-widest text-sm uppercase">View Project</span>
+                        <span
+                            class="material-symbols-outlined relative z-10 text-lg group-hover:rotate-45 transition-transform">arrow_outward</span>
+                        <div
+                            class="absolute inset-0 bg-white translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out">
+                        </div>
+                    </a>
+                </div>
+            </footer>
+
+            <!-- Corner frames -->
+            <div class="fixed top-6 left-6 w-4 h-4 border-l-2 border-t-2 border-black pointer-events-none opacity-50">
+            </div>
+            <div class="fixed top-6 right-6 w-4 h-4 border-r-2 border-t-2 border-black pointer-events-none opacity-50">
+            </div>
+            <div
+                class="fixed bottom-6 left-6 w-4 h-4 border-l-2 border-b-2 border-black pointer-events-none opacity-50">
+            </div>
+            <div
+                class="fixed bottom-6 right-6 w-4 h-4 border-r-2 border-b-2 border-black pointer-events-none opacity-50">
+            </div>
+        </section>
+
+        <!-- Section 5: About -->
+        <section class="section relative flex flex-col justify-between p-6 md:p-10 lg:p-14" id="about">
+            <div class="pointer-events-none absolute inset-0 z-50 h-full w-full opacity-[0.08]"
+                style="background: repeating-linear-gradient(to bottom, transparent 0px, transparent 2px, #000000 2px, #000000 4px);">
+            </div>
+
+            <header class="relative z-20 flex w-full items-start justify-between">
+                <div class="flex items-center gap-3">
+                    <div class="flex size-10 items-center justify-center border-2 border-black bg-black text-primary">
+                        <span class="material-symbols-outlined text-[24px]">terminal</span>
+                    </div>
+                    <div class="flex flex-col">
+                        <h2 class="text-lg font-black leading-none tracking-tight uppercase">About Me</h2>
+                        <span class="text-xs font-medium uppercase opacity-70">Who I Am</span>
+                    </div>
+                </div>
+                <nav class="hidden md:flex gap-8 items-center">
+                    <a class="text-sm font-bold uppercase tracking-widest hover:underline decoration-2 underline-offset-4 cursor-pointer"
+                        onclick="scrollToSection('work')">Work</a>
+                    <a class="text-sm font-bold uppercase tracking-widest hover:underline decoration-2 underline-offset-4 cursor-pointer"
+                        onclick="scrollToSection('about')">About</a>
+                    <a class="text-sm font-bold uppercase tracking-widest hover:underline decoration-2 underline-offset-4 cursor-pointer"
+                        onclick="scrollToSection('contact')">Contact</a>
+                </nav>
+            </header>
+
+            <main class="absolute inset-0 flex flex-col items-center justify-center z-10 pointer-events-none">
+                <!-- Quadrant hover areas -->
+                <div class="absolute inset-0 grid grid-cols-2 grid-rows-2 w-full h-full z-30 pointer-events-auto">
+                    <div class="peer/tl"></div>
+                    <div class="peer/tr"></div>
+                    <div class="peer/bl"></div>
+                    <div class="peer/br"></div>
+                </div>
+
+                <div
+                    class="flex flex-col items-center justify-center w-full  
+                        peer-hover/tl:[&_h1>div:nth-child(1)]:translate-x-[15px] peer-hover/tl:[&_h1>div:nth-child(1)]:translate-y-[15px]  
+                        peer-hover/tl:[&_h1>div:nth-child(2)]:translate-x-[30px] peer-hover/tl:[&_h1>div:nth-child(2)]:translate-y-[30px]  
+                        peer-hover/tr:[&_h1>div:nth-child(1)]:-translate-x-[15px] peer-hover/tr:[&_h1>div:nth-child(1)]:translate-y-[15px]  
+                        peer-hover/tr:[&_h1>div:nth-child(2)]:-translate-x-[30px] peer-hover/tr:[&_h1>div:nth-child(2)]:translate-y-[30px]  
+                        peer-hover/bl:[&_h1>div:nth-child(1)]:translate-x-[15px] peer-hover/bl:[&_h1>div:nth-child(1)]:-translate-y-[15px]  
+                        peer-hover/bl:[&_h1>div:nth-child(2)]:translate-x-[30px] peer-hover/bl:[&_h1>div:nth-child(2)]:-translate-y-[30px]  
+                        peer-hover/br:[&_h1>div:nth-child(1)]:-translate-x-[15px] peer-hover/br:[&_h1>div:nth-child(1)]:-translate-y-[15px]  
+                        peer-hover/br:[&_h1>div:nth-child(2)]:-translate-x-[30px] peer-hover/br:[&_h1>div:nth-child(2)]:-translate-y-[30px]">
+                    <h1 id="magnetic-text"
+                        class="text-[6vw] sm:text-[5vw] lg:text-[4vw] font-black leading-[1.1] tracking-tight text-center mix-blend-multiply opacity-90 select-none cursor-default">
+                        <!-- Content will be replaced by Canvas -->
+                        <div class="relative block">I'm a hands-on builder</div>
+                        <div class="relative block">who enjoys working where</div>
+                        <div class="relative block">technology, design,</div>
+                        <div class="relative block">and ideas meet.</div>
+                    </h1>
+                </div>
+            </main>
+
+            <div class="relative z-20 flex w-full items-end justify-between mt-auto">
+                <div class="flex flex-col gap-6 md:gap-10">
+                    <div class="hidden md:block">
+                        <p class="text-xs font-bold uppercase tracking-widest mb-1">Since</p>
+                        <p class="max-w-[280px] text-sm font-medium leading-relaxed">
+                            December, 2004
+                        </p>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="material-symbols-outlined text-[20px] animate-bounce">south</span>
+                        <p class="text-xs font-bold uppercase tracking-widest">Scroll or Drag</p>
+                    </div>
+                </div>
+
+                <div class="flex flex-col items-end gap-6">
+                    <div class="flex items-center gap-2 border border-black bg-black px-3 py-1.5 rounded-sm">
+                        <span class="relative flex size-2">
+                            <span
+                                class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+                            <span class="relative inline-flex rounded-full size-2 bg-primary"></span>
+                        </span>
+                        <span class="text-xs font-bold text-white tracking-wider uppercase">Available</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="absolute inset-0 pointer-events-none opacity-10 z-0">
+                <div class="h-full w-full"
+                    style="background-image: linear-gradient(black 1px, transparent 1px), linear-gradient(90deg, black 1px, transparent 1px); background-size: 100px 100px;">
+                </div>
+            </div>
+        </section>
+        <!-- Section 6: Contact -->
+        <section class="section relative flex flex-col p-4 md:p-8 lg:p-12 h-auto min-h-screen" id="contact">
+            <div class="absolute inset-0 z-0 opacity-[0.03] pointer-events-none mix-blend-multiply"
+                style="background-image: radial-gradient(circle, #000 1px, transparent 1px); background-size: 20px 20px;">
+            </div>
+
+            <header class="flex w-full items-start justify-between border-b-4 border-black pb-4 mb-4 lg:mb-8 z-10">
+                <div class="flex flex-col">
+                    <span class="text-sm font-bold uppercase tracking-widest">Get in Touch</span>
+                    <span class="text-xs font-bold uppercase tracking-widest opacity-60">Let's build something
+                        meaningful</span>
+                </div>
+                <div class="hidden md:flex gap-2 items-center cursor-pointer" onclick="scrollToSection('about')">
+                    <span class="material-symbols-outlined text-2xl font-bold">arrow_back</span>
+                    <span class="text-sm font-bold uppercase tracking-widest">Prev</span>
+                </div>
+            </header>
+
+            <main class="flex flex-1 flex-col justify-between">
+                <div class="flex-1 flex flex-col justify-center lg:justify-start">
+                    <h1 class="parallax-element text-[10vw] leading-[0.8] font-black uppercase tracking-[-0.06em] text-black break-words mt-4 lg:mt-0"
+                        data-speed="0.02">
+                        <span style="transform: scaleY(1.1); letter-spacing: -0.04em; display: inline-block;">
+                            Get in <br /> Touch
+                        </span>
+                    </h1>
+                </div>
+
+                <nav
+                    class="flex flex-col items-start gap-1 md:gap-4 relative mt-8 lg:mt-auto lg:mb-12 w-full max-w-[90vw]">
+                    <!-- Phone -->
+                    <a class="group flex items-center w-full border-b-[3px] border-black/20 hover:border-black transition-colors py-2 md:py-4 relative overflow-hidden"
+                        href="tel:9315158312">
+                        <div class="parallax-element flex items-center gap-6 z-10" data-speed="0.04">
+                            <span
+                                class="text-black group-hover:text-white transition-colors duration-200 text-3xl md:text-5xl lg:text-6xl font-black uppercase tracking-tighter"
+                                style="transform: scaleY(1.1); letter-spacing: -0.04em; display: inline-block;">Call:
+                                9315158312</span>
+                            <span
+                                class="material-symbols-outlined text-2xl md:text-4xl lg:text-5xl opacity-0 -translate-x-10 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-300 text-black group-hover:text-white">call</span>
+                        </div>
+                        <div
+                            class="absolute inset-0 bg-black translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out z-0">
+                        </div>
+                    </a>
+
+                    <!-- WhatsApp -->
+                    <a class="group flex items-center w-full border-b-[3px] border-black/20 hover:border-black transition-colors py-2 md:py-4 relative overflow-hidden"
+                        href="https://wa.me/919315158312" target="_blank">
+                        <div class="parallax-element flex items-center gap-6 z-10" data-speed="0.04">
+                            <span
+                                class="text-black group-hover:text-white transition-colors duration-200 text-3xl md:text-5xl lg:text-6xl font-black uppercase tracking-tighter"
+                                style="transform: scaleY(1.1); letter-spacing: -0.04em; display: inline-block;">WhatsApp</span>
+                            <span
+                                class="material-symbols-outlined text-2xl md:text-4xl lg:text-5xl opacity-0 -translate-x-10 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-300 text-black group-hover:text-white">chat</span>
+                        </div>
+                        <div
+                            class="absolute inset-0 bg-black translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out z-0">
+                        </div>
+                    </a>
+
+                    <!-- Instagram -->
+                    <a class="group flex items-center w-full border-b-[3px] border-black/20 hover:border-black transition-colors py-2 md:py-4 relative overflow-hidden"
+                        href="https://www.instagram.com/rk_achal?igsh=bzlndGZjN2hkOThq" target="_blank">
+                        <div class="parallax-element flex items-center gap-6 z-10" data-speed="0.04">
+                            <span
+                                class="text-black group-hover:text-white transition-colors duration-200 text-3xl md:text-5xl lg:text-6xl font-black uppercase tracking-tighter"
+                                style="transform: scaleY(1.1); letter-spacing: -0.04em; display: inline-block;">Instagram</span>
+                            <span
+                                class="material-symbols-outlined text-2xl md:text-4xl lg:text-5xl opacity-0 -translate-x-10 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-300 text-black group-hover:text-white">photo_camera</span>
+                        </div>
+                        <div
+                            class="absolute inset-0 bg-black translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out z-0">
+                        </div>
+                    </a>
+
+                    <!-- LinkedIn -->
+                    <a class="group flex items-center w-full border-b-[3px] border-black/20 hover:border-black transition-colors py-2 md:py-4 relative overflow-hidden"
+                        href="https://www.linkedin.com/in/ritesh-kumar-achal/" target="_blank">
+                        <div class="parallax-element flex items-center gap-6 z-10" data-speed="0.04">
+                            <span
+                                class="text-black group-hover:text-white transition-colors duration-200 text-3xl md:text-5xl lg:text-6xl font-black uppercase tracking-tighter"
+                                style="transform: scaleY(1.1); letter-spacing: -0.04em; display: inline-block;">LinkedIn</span>
+                            <span
+                                class="material-symbols-outlined text-2xl md:text-4xl lg:text-5xl opacity-0 -translate-x-10 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-300 text-black group-hover:text-white">group</span>
+                        </div>
+                        <div
+                            class="absolute inset-0 bg-black translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out z-0">
+                        </div>
+                    </a>
+
+                    <!-- GitHub -->
+                    <a class="group flex items-center w-full border-b-[3px] border-black/20 hover:border-black transition-colors py-2 md:py-4 relative overflow-hidden"
+                        href="https://github.com/Rkn-hub" target="_blank">
+                        <div class="parallax-element flex items-center gap-6 z-10" data-speed="0.04">
+                            <span
+                                class="text-black group-hover:text-white transition-colors duration-200 text-3xl md:text-5xl lg:text-6xl font-black uppercase tracking-tighter"
+                                style="transform: scaleY(1.1); letter-spacing: -0.04em; display: inline-block;">GitHub</span>
+                            <span
+                                class="material-symbols-outlined text-2xl md:text-4xl lg:text-5xl opacity-0 -translate-x-10 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-300 text-black group-hover:text-white">code</span>
+                        </div>
+                        <div
+                            class="absolute inset-0 bg-black translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out z-0">
+                        </div>
+                    </a>
+
+
+                </nav>
+            </main>
+
+            <footer class="flex items-end justify-between border-t-4 border-black pt-4 z-10">
+                <div class="flex flex-col gap-1">
+                    <span class="text-sm md:text-base font-bold uppercase tracking-wider">Available for Projects</span>
+                    <span class="text-xs md:text-sm font-bold uppercase tracking-wider opacity-60">Freelance &
+                        Collaboration</span>
+                </div>
+            </footer>
+
+            <div class="fixed -bottom-24 -left-24 opacity-[0.05] pointer-events-none rotate-[-15deg] z-0">
+                <span class="material-symbols-outlined text-[40vw]"
+                    style="font-variation-settings: 'FILL' 1, 'wght' 700;">alternate_email</span>
+            </div>
+        </section>
+
+    </main> <!-- Close main container -->
+
+    <!-- Zoom Overlay -->
+    <div id="zoom-overlay"
+        class="fixed inset-0 z-[9999] pointer-events-none flex items-center justify-center opacity-0 transition-opacity duration-300">
+        <div id="zoom-card"
+            class="relative w-[300px] h-[400px] md:w-[400px] md:h-[550px] transform-gpu scale-90 transition-transform duration-300">
+            <!-- Content injected here -->
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
