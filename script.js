@@ -880,7 +880,7 @@ class ParticleText {
         });
 
         const data = ctx.getImageData(0, 0, this.width, this.height).data;
-        const gap = 2; // Standardized gap for consistency
+        const gap = 1; // Tight gap for solid text appearance
 
         for (let py = 0; py < this.height; py += gap) {
             for (let px = 0; px < this.width; px += gap) {
@@ -928,7 +928,7 @@ class Particle {
         this.y = y;
         this.vx = 0;
         this.vy = 0;
-        this.size = 2;
+        this.size = 2.5; // Slightly larger for overlap
         this.color = '#000000'; // Default black
     }
 
