@@ -68,7 +68,8 @@
     </div>
 
     <!-- Navigation -->
-    <nav class="fixed top-6 left-6 z-50 mix-blend-multiply pointer-events-auto">
+    <nav
+        class="absolute top-0 left-0 w-full p-6 flex items-center justify-between z-50 mix-blend-multiply pointer-events-auto">
         <div class="flex items-center gap-2">
             <div
                 class="flex size-8 items-center justify-center rounded-full border-2 border-black bg-black text-primary">
@@ -76,7 +77,32 @@
             </div>
             <span class="text-sm font-bold tracking-widest uppercase">PORTFOLIO '24</span>
         </div>
+
+        <!-- Hamburger Button -->
+        <button id="menu-toggle" class="md:hidden text-black p-2 focus:outline-none pointer-events-auto"
+            aria-label="Toggle Menu">
+            <span class="material-symbols-outlined text-3xl">menu</span>
+        </button>
     </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div id="mobile-menu"
+        class="mobile-menu fixed inset-0 z-[45] bg-primary flex flex-col items-center justify-center pointer-events-auto">
+        <nav class="flex flex-col gap-8 text-center">
+            <a class="text-4xl font-black uppercase tracking-tighter hover:text-white transition-colors"
+                onclick="toggleMobileMenu(); scrollToSection('hero')">Home</a>
+            <a class="text-4xl font-black uppercase tracking-tighter hover:text-white transition-colors"
+                onclick="toggleMobileMenu(); scrollToSection('work')">Work</a>
+            <a class="text-4xl font-black uppercase tracking-tighter hover:text-white transition-colors"
+                onclick="toggleMobileMenu(); scrollToSection('vanguarr')">Skills</a>
+            <a class="text-4xl font-black uppercase tracking-tighter hover:text-white transition-colors"
+                onclick="toggleMobileMenu(); scrollToSection('projects')">Projects</a>
+            <a class="text-4xl font-black uppercase tracking-tighter hover:text-white transition-colors"
+                onclick="toggleMobileMenu(); scrollToSection('about')">About</a>
+            <a class="text-4xl font-black uppercase tracking-tighter hover:text-white transition-colors"
+                onclick="toggleMobileMenu(); scrollToSection('contact')">Contact</a>
+        </nav>
+    </div>
 
 
 
@@ -560,7 +586,8 @@
                 </div>
 
                 <!-- Project Cards Grid: 2 rows x 5 cards -->
-                <div class="grid grid-cols-5 gap-3 w-full max-w-5xl px-4 z-20 mt-6">
+                <!-- Project Cards Grid: Responsive Columns -->
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 w-full max-w-5xl px-4 z-20 mt-6">
                     <!-- Row 1 -->
                     <div class="project-card group cursor-pointer" style="perspective: 1000px;">
                         <div class="project-card-inner relative w-full aspect-[4/5] transition-transform duration-500 group-hover:[transform:rotateY(180deg)]"
@@ -814,7 +841,8 @@
 
             <main class="absolute inset-0 flex flex-col items-center justify-center z-10 pointer-events-none">
                 <!-- Quadrant hover areas -->
-                <div class="absolute inset-0 grid grid-cols-2 grid-rows-2 w-full h-full z-30 pointer-events-auto">
+                <div
+                    class="absolute inset-0 hidden lg:grid grid-cols-2 grid-rows-2 w-full h-full z-30 pointer-events-auto">
                     <div class="peer/tl"></div>
                     <div class="peer/tr"></div>
                     <div class="peer/bl"></div>
@@ -832,7 +860,7 @@
                         peer-hover/br:[&_h1>div:nth-child(1)]:-translate-x-[15px] peer-hover/br:[&_h1>div:nth-child(1)]:-translate-y-[15px]  
                         peer-hover/br:[&_h1>div:nth-child(2)]:-translate-x-[30px] peer-hover/br:[&_h1>div:nth-child(2)]:-translate-y-[30px]">
                     <h1 id="magnetic-text"
-                        class="text-[6vw] sm:text-[5vw] lg:text-[4vw] font-black leading-[1.1] tracking-tight text-center mix-blend-multiply opacity-90 select-none cursor-default">
+                        class="text-[6vw] sm:text-[5vw] lg:text-[4vw] font-black leading-[1.1] tracking-tight text-center mix-blend-multiply opacity-90 select-none cursor-default w-fit mx-auto">
                         <!-- Content will be replaced by Canvas -->
                         <div class="relative block">I'm a hands-on builder</div>
                         <div class="relative block">who enjoys working where</div>
@@ -875,7 +903,7 @@
             </div>
         </section>
         <!-- Section 6: Contact -->
-        <section class="section relative flex flex-col p-4 md:p-8 lg:p-12 h-auto min-h-screen" id="contact">
+        <section class="section relative flex flex-col p-4 md:p-8 lg:p-12 lg:pl-24 h-auto min-h-screen" id="contact">
             <div class="absolute inset-0 z-0 opacity-[0.03] pointer-events-none mix-blend-multiply"
                 style="background-image: radial-gradient(circle, #000 1px, transparent 1px); background-size: 20px 20px;">
             </div>
@@ -892,7 +920,7 @@
                 </div>
             </header>
 
-            <main class="flex flex-1 flex-col justify-between">
+            <main class="flex flex-1 flex-col justify-between pl-2 md:pl-4 lg:pl-8">
                 <div class="flex-1 flex flex-col justify-center lg:justify-start">
                     <h1 class="parallax-element text-[10vw] leading-[0.8] font-black uppercase tracking-[-0.06em] text-black break-words mt-4 lg:mt-0"
                         data-speed="0.02">

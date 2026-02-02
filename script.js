@@ -603,6 +603,23 @@ class TextFlipper {
 
 
 
+// Mobile Menu Toggle
+function toggleMobileMenu() {
+    const menu = document.getElementById('mobile-menu');
+    const btn = document.getElementById('menu-toggle');
+    const icon = btn.querySelector('.material-symbols-outlined');
+
+    if (menu.classList.contains('open')) {
+        menu.classList.remove('open');
+        icon.textContent = 'menu';
+        document.body.style.overflow = '';
+    } else {
+        menu.classList.add('open');
+        icon.textContent = 'close';
+        document.body.style.overflow = 'hidden';
+    }
+}
+
 // Initialize all systems when DOM is ready 
 document.addEventListener('DOMContentLoaded', () => {
     // Critical visual systems first
@@ -613,12 +630,25 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initial updates 
     scrollManager.updateProgress();
 
+    // Touch detection
+    const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    if (isTouch) {
+        document.body.classList.add('touch-device');
+        // Disable custom cursor
+        const cursor = document.querySelector('.custom-cursor');
+        if (cursor) cursor.style.display = 'none';
+    }
+
     // Deferred non-critical systems
     const deferInit = () => {
         new TimeManager();
         new PerformanceMonitor();
-        new ParticleText('magnetic-text');
+        // Optimize particles for touch
+        if (!isTouch || window.innerWidth > 768) {
+            new ParticleText('magnetic-text');
+        }
 
+        // Initialize GSAP Gallery
         // Initialize GSAP Gallery
         if (typeof initGalleryAnimation === 'function') {
             initGalleryAnimation();
@@ -653,15 +683,27 @@ class ParticleText {
         this.canvas.style.width = '200%'; // Double size to allow particles to fly out
         this.canvas.style.height = '200%';
         this.canvas.style.zIndex = '50'; // Increased z-index ensuring visibility
-        this.canvas.style.pointerEvents = 'auto';
+        this.canvas.style.pointerEvents = 'none'; // Visual only, events handled by layer
 
         // Append canvas
         this.container.appendChild(this.canvas);
 
+        // Create Interaction Layer (Exact size of container)
+        // This is the "region" the user requested
+        this.interactionLayer = document.createElement('div');
+        this.interactionLayer.style.position = 'absolute';
+        this.interactionLayer.style.top = '0';
+        this.interactionLayer.style.left = '0';
+        this.interactionLayer.style.width = '100%';
+        this.interactionLayer.style.height = '100%';
+        this.interactionLayer.style.zIndex = '51'; // Above canvas
+        this.interactionLayer.style.touchAction = 'none'; // CRITICAL: Prevent scrolling in this specific region
+        this.container.appendChild(this.interactionLayer);
+
         // Hide original text
         const children = this.container.children;
         for (let child of children) {
-            if (child !== this.canvas) {
+            if (child !== this.canvas && child !== this.interactionLayer) {
                 child.style.opacity = '0';
             }
         }
@@ -671,6 +713,7 @@ class ParticleText {
         this.friction = 0.85; // Lower friction = less sliding/floaty "water" feel
         this.ease = 0.12; // Higher ease = faster, snappier return like a magnet
         this.isAnimating = true;
+        this.isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 
         // Wait for fonts to load before initializing
         document.fonts.ready.then(() => {
@@ -682,15 +725,14 @@ class ParticleText {
             this.startAnimation();
         });
 
-        // Track mouse on window
+        // Track mouse on window (Desktop)
         window.addEventListener('mousemove', (e) => {
-            if (this.canvas) {
+            if (!this.isTouch && this.canvas) {
+                // Calculate relative to the expanded canvas
                 const rect = this.canvas.getBoundingClientRect();
-                // Check proximity (+ margin)
                 const margin = 100;
                 if (e.clientX >= rect.left - margin && e.clientX <= rect.right + margin &&
                     e.clientY >= rect.top - margin && e.clientY <= rect.bottom + margin) {
-
                     this.mouse.x = e.clientX - rect.left;
                     this.mouse.y = e.clientY - rect.top;
                     this.startAnimation();
@@ -700,6 +742,34 @@ class ParticleText {
                 }
             }
         });
+
+        // Touch Events on Interaction Layer (Mobile Region)
+        this.interactionLayer.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            const touch = e.touches[0];
+            this.handleTouchInput(touch.clientX, touch.clientY);
+        }, { passive: false });
+
+        this.interactionLayer.addEventListener('touchmove', (e) => {
+            e.preventDefault();
+            const touch = e.touches[0];
+            this.handleTouchInput(touch.clientX, touch.clientY);
+        }, { passive: false });
+
+        this.interactionLayer.addEventListener('touchend', () => {
+            this.mouse.x = null;
+            this.mouse.y = null;
+        });
+    }
+
+    handleTouchInput(clientX, clientY) {
+        if (this.canvas) {
+            // map touch from viewport to canvas coordinates
+            const rect = this.canvas.getBoundingClientRect();
+            this.mouse.x = clientX - rect.left;
+            this.mouse.y = clientY - rect.top;
+            this.startAnimation();
+        }
     }
 
     init() {
