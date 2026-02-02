@@ -639,16 +639,18 @@ document.addEventListener('DOMContentLoaded', () => {
         if (cursor) cursor.style.display = 'none';
     }
 
+    // Initialize Particle Text (Critical Feature - Init immediately)
+    try {
+        new ParticleText('magnetic-text');
+    } catch (e) {
+        console.error('ParticleText failed:', e);
+    }
+
     // Deferred non-critical systems
     const deferInit = () => {
         new TimeManager();
         new PerformanceMonitor();
-        // Optimize particles for touch
-        if (!isTouch || window.innerWidth > 768) {
-            new ParticleText('magnetic-text');
-        }
 
-        // Initialize GSAP Gallery
         // Initialize GSAP Gallery
         if (typeof initGalleryAnimation === 'function') {
             initGalleryAnimation();
@@ -698,6 +700,7 @@ class ParticleText {
         this.interactionLayer.style.height = '100%';
         this.interactionLayer.style.zIndex = '51'; // Above canvas
         this.interactionLayer.style.touchAction = 'none'; // CRITICAL: Prevent scrolling in this specific region
+        this.interactionLayer.style.background = 'rgba(0,0,0,0)'; // Force hit testing
         this.container.appendChild(this.interactionLayer);
 
         // Hide original text
@@ -715,60 +718,89 @@ class ParticleText {
         this.isAnimating = true;
         this.isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 
-        // Wait for fonts to load before initializing
-        document.fonts.ready.then(() => {
-            this.init();
-        });
+        // Initialize with fallback
+        let initialized = false;
+        const start = () => {
+            if (!initialized) {
+                initialized = true;
+                this.init();
+            }
+        };
+
+        // Try to wait for fonts, but force init after 1s if it fails
+        if (document.fonts && document.fonts.ready) {
+            document.fonts.ready.then(start);
+        } else {
+            setTimeout(start, 500);
+        }
+        setTimeout(start, 2000); // Fail-safe
 
         window.addEventListener('resize', () => {
-            this.resize();
-            this.startAnimation();
+            // Debounce resize
+            clearTimeout(this.resizeTimer);
+            this.resizeTimer = setTimeout(() => {
+                this.resize();
+                this.startAnimation();
+            }, 100);
         });
 
         // Track mouse on window (Desktop)
         window.addEventListener('mousemove', (e) => {
             if (!this.isTouch && this.canvas) {
-                // Calculate relative to the expanded canvas
-                const rect = this.canvas.getBoundingClientRect();
-                const margin = 100;
-                if (e.clientX >= rect.left - margin && e.clientX <= rect.right + margin &&
-                    e.clientY >= rect.top - margin && e.clientY <= rect.bottom + margin) {
-                    this.mouse.x = e.clientX - rect.left;
-                    this.mouse.y = e.clientY - rect.top;
-                    this.startAnimation();
-                } else {
-                    this.mouse.x = null;
-                    this.mouse.y = null;
-                }
+                this.handleInput(e.clientX, e.clientY);
             }
         });
 
-        // Touch Events on Interaction Layer (Mobile Region)
+        // Touch Events on Interaction Layer (Mobile Region) - Optimized
+        // Cache rect to avoid layout thrashing during swipe
+        this.cachedRect = null;
+
         this.interactionLayer.addEventListener('touchstart', (e) => {
-            e.preventDefault();
+            if (e.cancelable) e.preventDefault();
+            this.cachedRect = this.canvas.getBoundingClientRect(); // Cache on start
             const touch = e.touches[0];
-            this.handleTouchInput(touch.clientX, touch.clientY);
+
+            // Calculate directly
+            this.mouse.x = touch.clientX - this.cachedRect.left;
+            this.mouse.y = touch.clientY - this.cachedRect.top;
+            this.startAnimation();
         }, { passive: false });
 
         this.interactionLayer.addEventListener('touchmove', (e) => {
-            e.preventDefault();
+            if (e.cancelable) e.preventDefault();
+            if (!this.cachedRect) this.cachedRect = this.canvas.getBoundingClientRect(); // Safety
+
             const touch = e.touches[0];
-            this.handleTouchInput(touch.clientX, touch.clientY);
+            this.mouse.x = touch.clientX - this.cachedRect.left;
+            this.mouse.y = touch.clientY - this.cachedRect.top;
+            this.startAnimation();
         }, { passive: false });
 
-        this.interactionLayer.addEventListener('touchend', () => {
+        this.interactionLayer.addEventListener('touchend', (e) => {
+            // Prevent ghost clicks if needed, but mainly clear mouse
+            if (e.cancelable) e.preventDefault();
             this.mouse.x = null;
             this.mouse.y = null;
+            this.cachedRect = null; // Clear cache
         });
     }
 
-    handleTouchInput(clientX, clientY) {
+    handleInput(clientX, clientY) {
         if (this.canvas) {
             // map touch from viewport to canvas coordinates
             const rect = this.canvas.getBoundingClientRect();
-            this.mouse.x = clientX - rect.left;
-            this.mouse.y = clientY - rect.top;
-            this.startAnimation();
+            const margin = 100;
+
+            // Desktop hover check with margin
+            if (clientX >= rect.left - margin && clientX <= rect.right + margin &&
+                clientY >= rect.top - margin && clientY <= rect.bottom + margin) {
+                this.mouse.x = clientX - rect.left;
+                this.mouse.y = clientY - rect.top;
+                this.startAnimation();
+            } else {
+                this.mouse.x = null;
+                this.mouse.y = null;
+            }
         }
     }
 
@@ -778,6 +810,8 @@ class ParticleText {
     }
 
     resize() {
+        if (!this.container || !this.canvas) return;
+
         // Canvas resolution should match display size
         this.width = this.container.clientWidth * 2; // Match the 200% CSS width
         this.height = this.container.clientHeight * 2; // Match the 200% CSS height
@@ -835,7 +869,7 @@ class ParticleText {
         });
 
         const data = ctx.getImageData(0, 0, this.width, this.height).data;
-        const gap = 2; // Increased density (smaller gap)
+        const gap = 2; // Standardized gap for consistency
 
         for (let py = 0; py < this.height; py += gap) {
             for (let px = 0; px < this.width; px += gap) {
