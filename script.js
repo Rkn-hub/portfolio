@@ -2,7 +2,7 @@
 // Performance optimized animation system 
 class AnimationEngine {
     constructor() {
-        this.mouse = { x: 0, y: 0 };
+        this.mouse = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
         this.currentSection = null;
         this.isAnimating = false;
         this.elements = {
@@ -929,7 +929,7 @@ class Particle {
         this.vx = 0;
         this.vy = 0;
         this.size = 2.5; // Slightly larger for overlap
-        this.color = '#000000'; // Default black
+        this.color = '#ffffff'; // Default white
     }
 
     update() {
@@ -1009,15 +1009,15 @@ function initGalleryAnimation() {
             // Flicker through specific words on scroll
             if (Math.random() > 0.7) {
                 const words = [
-                    "gallery",
-                    "portfolio",
-                    "certificates",
+                    "Gallery",
+                    "Portfolio",
+                    "Certificates",
                     "Rkn",
-                    "skills",
-                    "startups",
-                    "freelancing",
-                    "ideas",
-                    "design"
+                    "Skills",
+                    "Startups",
+                    "Freelancing",
+                    "Ideas",
+                    "Design"
                 ];
                 const randomWord = words[Math.floor(Math.random() * words.length)];
                 title.innerText = randomWord;

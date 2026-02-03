@@ -5,12 +5,15 @@
 
         :root {
             --primary: #0066ff;
+            --bg-dark: #0a0a0a;
+            --glow-color: rgba(0, 102, 255, 0.15);
         }
 
         /* Prevent FOUC (Flash of Unstyled Content) */
         body {
             opacity: 0;
-            background-color: #0066ff;
+            background-color: var(--bg-dark);
+            background-image: radial-gradient(ellipse at 50% 0%, var(--glow-color) 0%, transparent 60%);
             transition: opacity 0.1s ease-in;
         }
 
@@ -79,7 +82,7 @@
 
         .glitch-text {
             position: relative;
-            color: black;
+            color: white;
             --para-x: 0px;
             --para-y: 0px;
             transform: translate(var(--para-x), var(--para-y));
@@ -95,7 +98,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: #0066ff;
+            background: var(--bg-dark);
             overflow: hidden;
         }
 
@@ -173,8 +176,8 @@
             background: repeating-linear-gradient(to bottom,
                     transparent,
                     transparent 3px,
-                    rgba(0, 0, 0, 0.08) 3px,
-                    rgba(0, 0, 0, 0.08) 4px);
+                    rgba(255, 255, 255, 0.03) 3px,
+                    rgba(255, 255, 255, 0.03) 4px);
         }
 
         .progress-bar {
@@ -182,14 +185,14 @@
             bottom: 0;
             left: 0;
             height: 4px;
-            background: rgba(0, 0, 0, 0.2);
+            background: rgba(255, 255, 255, 0.1);
             width: 100%;
             z-index: 50;
         }
 
         .progress-fill {
             height: 100%;
-            background: black;
+            background: var(--primary);
             transform-origin: left center;
             will-change: transform;
             backface-visibility: hidden;
@@ -217,7 +220,7 @@
             transform: translateZ(0);
             backface-visibility: hidden;
             box-sizing: border-box;
-            background-color: var(--primary);
+            background-color: var(--bg-dark);
             /* Force background to hide previous sections */
         }
 
@@ -376,21 +379,22 @@
             height: 100%;
             -webkit-backface-visibility: hidden;
             backface-visibility: hidden;
-            background: #0066ff;
-            border: 2px solid black;
+            background: var(--bg-dark);
+            border: 2px solid white;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 4px 10px rgba(0, 102, 255, 0.2);
             font-family: 'Space Grotesk', sans-serif;
+            color: white;
         }
 
         .card-face::after {
             content: '';
             position: absolute;
             inset: 4px;
-            border: 1px solid rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             pointer-events: none;
         }
 
@@ -401,12 +405,12 @@
 
         .card-face.back {
             transform: rotateY(180deg);
-            background: #000;
-            color: #0066ff;
+            background: var(--primary);
+            color: white;
             padding: 1rem;
             text-align: center;
             z-index: 1;
-            border-color: #0066ff;
+            border-color: var(--primary);
         }
 
         /* Typography for Faces */
@@ -438,7 +442,7 @@
             font-weight: 700;
             text-transform: uppercase;
             margin-bottom: 0.5rem;
-            color: #0066ff;
+            color: #fff;
         }
 
         .card-face.back p {
@@ -614,6 +618,59 @@
             .sphere-wrapper {
                 transform: scale(0.9);
             }
+        }
+
+        .hero-magazine-wrapper {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .hero-magazine-title {
+            font-size: 15vw;
+            font-weight: 900;
+            line-height: 0.8;
+            color: #fff;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+            white-space: nowrap;
+            pointer-events: none;
+            letter-spacing: -0.05em;
+            text-transform: uppercase;
+        }
+
+        .hero-magazine-image {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            height: 85vh;
+            max-height: 95%;
+            width: auto;
+            max-width: none;
+            z-index: 20;
+            /* In front of text */
+            object-fit: contain;
+            filter: drop-shadow(0 0 50px rgba(0, 0, 0, 0.5));
+            pointer-events: none;
+        }
+
+        .hero-sub-overlay {
+            position: absolute;
+            bottom: 10vh;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 30;
+            text-align: center;
+            width: 100%;
+            max-width: 600px;
         }
 
         /* Mobile Menu Styles */
