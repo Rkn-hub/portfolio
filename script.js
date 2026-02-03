@@ -80,11 +80,11 @@ class AnimationEngine {
 
         // Sphere Images
         const sphereImages = [
-            "gallery/sphere/20220729_173021.jpg",
-            "gallery/sphere/IMG-20220805-WA0018.jpg",
-            "gallery/sphere/IMG-20240908-WA0040.jpg",
-            "gallery/sphere/IMG20240610205908.jpg",
-            "gallery/sphere/IMG20240610205931.jpg"
+            "gallery/sphere/20220729_173021.webp",
+            "gallery/sphere/IMG-20220805-WA0018.webp",
+            "gallery/sphere/IMG-20240908-WA0040.webp",
+            "gallery/sphere/IMG20240610205908.webp",
+            "gallery/sphere/IMG20240610205931.webp"
         ];
 
         let textCardIndex = 0;
