@@ -330,12 +330,7 @@
             cursor: pointer;
         }
 
-        /* Pause rotation when hovering a card */
-        /* Pause rotation when hovering a card */
-        .sphere-card:hover~.sphere-container,
-        .sphere-container:hover {
-            animation-play-state: paused;
-        }
+        /* Pause rotation when hovering a card - handled via JS for reliability */
 
         .sphere-card:hover {
             z-index: 100;
@@ -571,12 +566,23 @@
         }
 
         /* 2. Mobile Layout (< 640px) */
+        /* 2. Mobile Layout (< 640px) */
         @media (max-width: 640px) {
 
             .sphere-mover,
             .sphere-container {
                 width: 250px;
                 height: 250px;
+                /* Center the sphere better */
+                margin: 0 auto;
+            }
+
+            .sphere-wrapper {
+                /* Center vertically by taking up space */
+                flex-grow: 1;
+                margin-top: 0;
+                transform: scale(0.85);
+                /* Slightly smaller to fit */
             }
 
             .sphere-card {
@@ -589,9 +595,23 @@
                 font-size: 1.2rem;
             }
 
+            /* Reduce title margin to give sphere more space */
+            #vanguarr .mb-12 {
+                margin-bottom: 1.5rem !important;
+            }
+
             /* Adjust section padding */
             .section {
                 padding: 1rem;
+            }
+
+            /* Reduce negative space in About/Contact */
+            #about,
+            #contact {
+                min-height: auto !important;
+                /* Allow collapse */
+                padding-bottom: 4rem;
+                /* Adequate spacing */
             }
 
             /* Hero text adjustment */
@@ -651,6 +671,7 @@
             bottom: 0;
             left: 50%;
             transform: translateX(-50%);
+            /* Start Centered */
             height: 85vh;
             max-height: 95%;
             width: auto;

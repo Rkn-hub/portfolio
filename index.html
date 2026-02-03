@@ -184,7 +184,7 @@
 
                     <!-- Layer 2.5: Reveal Text (Initially Hidden) -->
                     <div
-                        class="hero-reveal-text absolute top-0 left-0 w-full md:w-1/2 h-full flex flex-col justify-center items-start pl-8 md:pl-24 z-20 opacity-0 pointer-events-none mix-blend-difference">
+                        class="hero-reveal-text absolute top-0 left-0 w-full md:w-1/2 h-full flex flex-col justify-center items-center md:items-start pl-0 md:pl-24 z-20 opacity-0 pointer-events-none mix-blend-difference text-center md:text-left">
                         <h2 class="text-[8vw] md:text-[6vw] font-black leading-[0.9] text-white tracking-tighter">
                             I'M <span class="text-primary">Arcane</span><br>
                             <span class="text-primary">RKN</span>
@@ -202,39 +202,78 @@
                             // since body has overflow: hidden
                             const scroller = document.querySelector(".scroll-container");
 
-                            // Hero Scroll Animation
-                            const tl = gsap.timeline({
-                                scrollTrigger: {
-                                    trigger: "#hero",
-                                    scroller: scroller, // <--- IMPORTANT: Defined the custom scroller
-                                    start: "top top",
-                                    end: "+=100%",
-                                    scrub: 1,
-                                    pin: true,
-                                    // markers: true 
-                                }
+                            let mm = gsap.matchMedia();
+
+                            // Desktop Animation (Move Image Right)
+                            mm.add("(min-width: 641px)", () => {
+                                const tl = gsap.timeline({
+                                    scrollTrigger: {
+                                        trigger: "#hero",
+                                        scroller: scroller,
+                                        start: "top top",
+                                        end: "+=100%",
+                                        scrub: 1,
+                                        pin: true,
+                                    }
+                                });
+
+                                tl.to(".hero-magazine-image", {
+                                    x: "25vw", // Move to the right on scroll
+                                    scale: 0.9,
+                                    ease: "power2.out"
+                                }, "start")
+                                    .to("#hero-title-container", {
+                                        opacity: 0,
+                                        scale: 1.2,
+                                        ease: "power2.out"
+                                    }, "start")
+                                    .to(".hero-sub-overlay", {
+                                        opacity: 0,
+                                        y: 50,
+                                        ease: "power2.out"
+                                    }, "start")
+                                    .to(".hero-reveal-text", {
+                                        opacity: 1,
+                                        y: 0,
+                                        ease: "power2.out"
+                                    }, "start+=0.1");
                             });
 
-                            tl.to(".hero-magazine-image", {
-                                xPercent: 50,
-                                scale: 0.9,
-                                ease: "power2.out"
-                            }, "start")
-                                .to("#hero-title-container", { // Target the wrapper div, not the inner span
-                                    opacity: 0,
-                                    scale: 1.2,
+                            // Mobile Animation (Keep Image Centered)
+                            mm.add("(max-width: 640px)", () => {
+                                const tl = gsap.timeline({
+                                    scrollTrigger: {
+                                        trigger: "#hero",
+                                        scroller: scroller,
+                                        start: "top top",
+                                        end: "+=100%",
+                                        scrub: 1,
+                                        // Pinning might cause issues on mobile if viewport sizes change (address bar), 
+                                        // but keeping it for consistency. if jumpy, we can remove pin via matchMedia.
+                                        pin: true,
+                                    }
+                                });
+
+                                tl.to(".hero-magazine-image", {
+                                    scale: 0.9, // Just scale down slightly, no X movement
                                     ease: "power2.out"
                                 }, "start")
-                                .to(".hero-sub-overlay", {
-                                    opacity: 0,
-                                    y: 50,
-                                    ease: "power2.out"
-                                }, "start")
-                                .to(".hero-reveal-text", {
-                                    opacity: 1,
-                                    x: 50,
-                                    ease: "power2.out"
-                                }, "start+=0.1");
+                                    .to("#hero-title-container", {
+                                        opacity: 0,
+                                        scale: 1.2,
+                                        ease: "power2.out"
+                                    }, "start")
+                                    .to(".hero-sub-overlay", {
+                                        opacity: 0,
+                                        y: 50,
+                                        ease: "power2.out"
+                                    }, "start")
+                                    .to(".hero-reveal-text", {
+                                        opacity: 1,
+                                        y: 0,
+                                        ease: "power2.out"
+                                    }, "start+=0.1");
+                            });
                         });
                     </script>
 
@@ -702,7 +741,7 @@
                         <div class="project-card-inner relative w-full aspect-[4/5] transition-transform duration-500 group-hover:[transform:rotateY(180deg)]"
                             style="transform-style: preserve-3d;">
                             <div
-                                class="project-card-front absolute inset-0 bg-black flex items-center justify-center p-3 backface-hidden">
+                                class="project-card-front absolute inset-0 bg-black flex items-center justify-center p-3 backface-hidden border border-white/20">
                                 <span
                                     class="text-white font-black text-sm md:text-base text-center uppercase tracking-tight">Extoll</span>
                             </div>
@@ -718,7 +757,7 @@
                         <div class="project-card-inner relative w-full aspect-[4/5] transition-transform duration-500 group-hover:[transform:rotateY(180deg)]"
                             style="transform-style: preserve-3d;">
                             <div
-                                class="project-card-front absolute inset-0 bg-black flex items-center justify-center p-3 backface-hidden">
+                                class="project-card-front absolute inset-0 bg-black flex items-center justify-center p-3 backface-hidden border border-white/20">
                                 <span
                                     class="text-white font-black text-sm md:text-base text-center uppercase tracking-tight">Marketplace</span>
                             </div>
@@ -734,7 +773,7 @@
                         <div class="project-card-inner relative w-full aspect-[4/5] transition-transform duration-500 group-hover:[transform:rotateY(180deg)]"
                             style="transform-style: preserve-3d;">
                             <div
-                                class="project-card-front absolute inset-0 bg-black flex items-center justify-center p-3 backface-hidden">
+                                class="project-card-front absolute inset-0 bg-black flex items-center justify-center p-3 backface-hidden border border-white/20">
                                 <span
                                     class="text-white font-black text-sm md:text-base text-center uppercase tracking-tight">Startup
                                     Ops</span>
@@ -751,14 +790,14 @@
                         <div class="project-card-inner relative w-full aspect-[4/5] transition-transform duration-500 group-hover:[transform:rotateY(180deg)]"
                             style="transform-style: preserve-3d;">
                             <div
-                                class="project-card-front absolute inset-0 bg-black flex items-center justify-center p-3 backface-hidden">
+                                class="project-card-front absolute inset-0 bg-black flex items-center justify-center p-3 backface-hidden border border-white/20">
                                 <span
                                     class="text-white font-black text-sm md:text-base text-center uppercase tracking-tight">AI
                                     Realism</span>
                             </div>
                             <div class="project-card-back absolute inset-0 bg-primary border-2 border-black flex items-center justify-center p-2 backface-hidden"
                                 style="transform: rotateY(180deg);">
-                                <p class="text-black text-[10px] md:text-xs font-bold text-center leading-tight">
+                                <p class="text-white text-[10px] md:text-xs font-bold text-center leading-tight">
                                     Research on synthetic data & AI accuracy.</p>
                             </div>
                         </div>
@@ -768,14 +807,14 @@
                         <div class="project-card-inner relative w-full aspect-[4/5] transition-transform duration-500 group-hover:[transform:rotateY(180deg)]"
                             style="transform-style: preserve-3d;">
                             <div
-                                class="project-card-front absolute inset-0 bg-black flex items-center justify-center p-3 backface-hidden">
+                                class="project-card-front absolute inset-0 bg-black flex items-center justify-center p-3 backface-hidden border border-white/20">
                                 <span
                                     class="text-white font-black text-sm md:text-base text-center uppercase tracking-tight">Sustainable
                                     Twin</span>
                             </div>
                             <div class="project-card-back absolute inset-0 bg-primary border-2 border-black flex items-center justify-center p-2 backface-hidden"
                                 style="transform: rotateY(180deg);">
-                                <p class="text-black text-[10px] md:text-xs font-bold text-center leading-tight">Digital
+                                <p class="text-white text-[10px] md:text-xs font-bold text-center leading-tight">Digital
                                     twins for environmental impact.</p>
                             </div>
                         </div>
@@ -786,7 +825,7 @@
                         <div class="project-card-inner relative w-full aspect-[4/5] transition-transform duration-500 group-hover:[transform:rotateY(180deg)]"
                             style="transform-style: preserve-3d;">
                             <div
-                                class="project-card-front absolute inset-0 bg-black flex items-center justify-center p-3 backface-hidden">
+                                class="project-card-front absolute inset-0 bg-black flex items-center justify-center p-3 backface-hidden border border-white/20">
                                 <span
                                     class="text-white font-black text-sm md:text-base text-center uppercase tracking-tight">Cancer
                                     Detection</span>
@@ -803,7 +842,7 @@
                         <div class="project-card-inner relative w-full aspect-[4/5] transition-transform duration-500 group-hover:[transform:rotateY(180deg)]"
                             style="transform-style: preserve-3d;">
                             <div
-                                class="project-card-front absolute inset-0 bg-black flex items-center justify-center p-3 backface-hidden">
+                                class="project-card-front absolute inset-0 bg-black flex items-center justify-center p-3 backface-hidden border border-white/20">
                                 <span
                                     class="text-white font-black text-sm md:text-base text-center uppercase tracking-tight">Sustainable
                                     RO</span>
@@ -820,7 +859,7 @@
                         <div class="project-card-inner relative w-full aspect-[4/5] transition-transform duration-500 group-hover:[transform:rotateY(180deg)]"
                             style="transform-style: preserve-3d;">
                             <div
-                                class="project-card-front absolute inset-0 bg-black flex items-center justify-center p-3 backface-hidden">
+                                class="project-card-front absolute inset-0 bg-black flex items-center justify-center p-3 backface-hidden border border-white/20">
                                 <span
                                     class="text-white font-black text-sm md:text-base text-center uppercase tracking-tight">Edu-Tech
                                     App</span>
@@ -838,7 +877,7 @@
                         <div class="project-card-inner relative w-full aspect-[4/5] transition-transform duration-500 group-hover:[transform:rotateY(180deg)]"
                             style="transform-style: preserve-3d;">
                             <div
-                                class="project-card-front absolute inset-0 bg-black flex items-center justify-center p-3 backface-hidden">
+                                class="project-card-front absolute inset-0 bg-black flex items-center justify-center p-3 backface-hidden border border-white/20">
                                 <span
                                     class="text-white font-black text-sm md:text-base text-center uppercase tracking-tight">UI
                                     Experiments</span>
@@ -855,7 +894,7 @@
                         <div class="project-card-inner relative w-full aspect-[4/5] transition-transform duration-500 group-hover:[transform:rotateY(180deg)]"
                             style="transform-style: preserve-3d;">
                             <div
-                                class="project-card-front absolute inset-0 bg-black flex items-center justify-center p-3 backface-hidden">
+                                class="project-card-front absolute inset-0 bg-black flex items-center justify-center p-3 backface-hidden border border-white/20">
                                 <span
                                     class="text-white font-black text-sm md:text-base text-center uppercase tracking-tight">More
                                     Soon</span>

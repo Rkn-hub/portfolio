@@ -75,6 +75,41 @@ class AnimationEngine {
                 title: "PHOTOGRAPHY",
                 sub: "VISUALS",
                 details: "Visual Storytelling<br>Composition & Lighting<br>Editing & Color Grading"
+            },
+            {
+                title: "LEADERSHIP",
+                sub: "MANAGEMENT",
+                details: "Team Building<br>Project Management<br>Decision Making"
+            },
+            {
+                title: "APP DEV",
+                sub: "LEARNING",
+                details: "Mobile Development<br>Cross-platform Apps<br>Currently Exploring"
+            },
+            {
+                title: "GRAPHIC DESIGN",
+                sub: "CREATIVE",
+                details: "Visual Identity<br>Digital Graphics<br>Brand Assets"
+            },
+            {
+                title: "3D MODELING",
+                sub: "3D ART",
+                details: "3D Visualization<br>Model Creation<br>Rendering & Texturing"
+            },
+            {
+                title: "VIDEO EDITING",
+                sub: "MOTION",
+                details: "Video Production<br>Motion Graphics<br>Post-production"
+            },
+            {
+                title: "SKETCHING",
+                sub: "ART",
+                details: "Conceptual Sketches<br>Hand Drawing<br>Creative Ideation"
+            },
+            {
+                title: "PROGRAMMING",
+                sub: "LANGUAGES",
+                details: "Java, C, C++<br>HTML, CSS<br>Python"
             }
         ];
 
@@ -661,6 +696,36 @@ document.addEventListener('DOMContentLoaded', () => {
         requestIdleCallback(deferInit);
     } else {
         setTimeout(deferInit, 200);
+    }
+
+    // Sphere animation restart on section visibility
+    const vanguarrSection = document.getElementById('vanguarr');
+    const sphereContainer = document.getElementById('sphereContainer');
+    const sphereMover = document.getElementById('sphereMover');
+
+    if (vanguarrSection && (sphereContainer || sphereMover)) {
+        const sphereObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    // Force restart animation by removing and re-adding animation class
+                    if (sphereContainer) {
+                        sphereContainer.style.animation = 'none';
+                        sphereContainer.offsetHeight; // Force reflow
+                        sphereContainer.style.animation = '';
+                    }
+                    if (sphereMover) {
+                        sphereMover.style.animation = 'none';
+                        sphereMover.offsetHeight; // Force reflow
+                        sphereMover.style.animation = '';
+                    }
+                }
+            });
+        }, {
+            root: document.querySelector('.scroll-container'),
+            threshold: 0.1
+        });
+
+        sphereObserver.observe(vanguarrSection);
     }
 });
 
