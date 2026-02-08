@@ -52,12 +52,12 @@ class AnimationEngine {
                 details: "User-first workflows<br>System-level thinking"
             },
             {
-                title: "DEVELOPMENT",
+                title: "WEB DEVELOPMENT",
                 sub: "CODE",
                 details: "HTML, CSS, JS<br>Python (Basics/Auto)<br>Frontend Logic"
             },
             {
-                title: "DESIGN",
+                title: "UI/UX DESIGN",
                 sub: "UI/UX",
                 details: "UI/UX Fundamentals<br>Figma & Canva<br>Visual Hierarchy"
             },
@@ -67,7 +67,7 @@ class AnimationEngine {
                 details: "AI & Content Tools<br>Workflow Automation<br>Realism Experiments"
             },
             {
-                title: "STARTUP OPS",
+                title: "STARTUP OPERATIONS",
                 sub: "EXECUTION",
                 details: "Early-stage execution<br>Branding & Positioning<br>Team Coordination"
             },

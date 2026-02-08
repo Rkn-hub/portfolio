@@ -719,3 +719,16 @@
         .group:hover .text-flip {
             transform: translateY(-50%);
         }
+/* About Section Expansion */
+#about {
+    height: auto !important;
+    min-height: 100vh;
+    overflow-y: visible !important;
+}
+
+/* Service Card Glow Effect */
+.group:hover .material-symbols-outlined {
+    text-shadow: 0 0 15px var(--primary);
+    transform: scale(1.1);
+    transition: all 0.3s ease;
+}

@@ -953,12 +953,13 @@
         </section>
 
         <!-- Section 5: About -->
-        <section class="section relative flex flex-col justify-between p-6 md:p-10 lg:p-14 bg-[#0a0a0a]" id="about">
+        <section class="section relative flex flex-col p-6 md:p-10 lg:p-14 bg-[#0a0a0a]" id="about"
+            style="height: auto; min-height: 100vh; overflow-y: visible;">
             <div class="pointer-events-none absolute inset-0 z-50 h-full w-full opacity-[0.08]"
                 style="background: repeating-linear-gradient(to bottom, transparent 0px, transparent 2px, #ffffff 2px, #ffffff 4px);">
             </div>
 
-            <header class="relative z-20 flex w-full items-start justify-between">
+            <header class="relative z-20 flex w-full items-start justify-between mb-12">
                 <div class="flex items-center gap-3">
                     <div class="flex size-10 items-center justify-center border-2 border-white bg-white text-[#0a0a0a]">
                         <span class="material-symbols-outlined text-[24px]">terminal</span>
@@ -978,48 +979,170 @@
                 </nav>
             </header>
 
-            <main class="absolute inset-0 flex flex-col items-center justify-center z-10 pointer-events-none">
-                <!-- Quadrant hover areas -->
+            <main class="relative z-10 flex flex-col w-full max-w-7xl mx-auto">
+                <!-- Magnetic Hero Text -->
                 <div
-                    class="absolute inset-0 hidden lg:grid grid-cols-2 grid-rows-2 w-full h-full z-30 pointer-events-auto">
-                    <div class="peer/tl"></div>
-                    <div class="peer/tr"></div>
-                    <div class="peer/bl"></div>
-                    <div class="peer/br"></div>
+                    class="relative w-full h-[50vh] md:h-[60vh] flex flex-col items-center justify-center mb-16 md:mb-24">
+                    <!-- Quadrant hover areas for magnetic effect -->
+                    <div class="absolute inset-0 grid grid-cols-2 grid-rows-2 w-full h-full z-30 pointer-events-auto">
+                        <div class="peer/tl"></div>
+                        <div class="peer/tr"></div>
+                        <div class="peer/bl"></div>
+                        <div class="peer/br"></div>
+                    </div>
+
+                    <div
+                        class="flex flex-col items-center justify-center w-full z-20 pointer-events-none
+                            peer-hover/tl:[&_h1>div:nth-child(1)]:translate-x-[15px] peer-hover/tl:[&_h1>div:nth-child(1)]:translate-y-[15px]  
+                            peer-hover/tl:[&_h1>div:nth-child(2)]:translate-x-[30px] peer-hover/tl:[&_h1>div:nth-child(2)]:translate-y-[30px]  
+                            peer-hover/tr:[&_h1>div:nth-child(1)]:-translate-x-[15px] peer-hover/tr:[&_h1>div:nth-child(1)]:translate-y-[15px]  
+                            peer-hover/tr:[&_h1>div:nth-child(2)]:-translate-x-[30px] peer-hover/tr:[&_h1>div:nth-child(2)]:translate-y-[30px]  
+                            peer-hover/bl:[&_h1>div:nth-child(1)]:translate-x-[15px] peer-hover/bl:[&_h1>div:nth-child(1)]:-translate-y-[15px]  
+                            peer-hover/bl:[&_h1>div:nth-child(2)]:translate-x-[30px] peer-hover/bl:[&_h1>div:nth-child(2)]:-translate-y-[30px]  
+                            peer-hover/br:[&_h1>div:nth-child(1)]:-translate-x-[15px] peer-hover/br:[&_h1>div:nth-child(1)]:-translate-y-[15px]  
+                            peer-hover/br:[&_h1>div:nth-child(2)]:-translate-x-[30px] peer-hover/br:[&_h1>div:nth-child(2)]:-translate-y-[30px]">
+                        <h1 id="magnetic-text"
+                            class="text-[7vw] md:text-[5vw] font-black leading-[1.1] tracking-tight text-center opacity-90 select-none cursor-default w-fit mx-auto text-white">
+                            <!-- Content will be replaced by Canvas -->
+                            <div class="relative block">I'm a hands-on builder</div>
+                            <div class="relative block">who enjoys working where</div>
+                            <div class="relative block">technology, design,</div>
+                            <div class="relative block">and ideas meet.</div>
+                        </h1>
+                    </div>
                 </div>
 
-                <div
-                    class="flex flex-col items-center justify-center w-full  
-                        peer-hover/tl:[&_h1>div:nth-child(1)]:translate-x-[15px] peer-hover/tl:[&_h1>div:nth-child(1)]:translate-y-[15px]  
-                        peer-hover/tl:[&_h1>div:nth-child(2)]:translate-x-[30px] peer-hover/tl:[&_h1>div:nth-child(2)]:translate-y-[30px]  
-                        peer-hover/tr:[&_h1>div:nth-child(1)]:-translate-x-[15px] peer-hover/tr:[&_h1>div:nth-child(1)]:translate-y-[15px]  
-                        peer-hover/tr:[&_h1>div:nth-child(2)]:-translate-x-[30px] peer-hover/tr:[&_h1>div:nth-child(2)]:translate-y-[30px]  
-                        peer-hover/bl:[&_h1>div:nth-child(1)]:translate-x-[15px] peer-hover/bl:[&_h1>div:nth-child(1)]:-translate-y-[15px]  
-                        peer-hover/bl:[&_h1>div:nth-child(2)]:translate-x-[30px] peer-hover/bl:[&_h1>div:nth-child(2)]:-translate-y-[30px]  
-                        peer-hover/br:[&_h1>div:nth-child(1)]:-translate-x-[15px] peer-hover/br:[&_h1>div:nth-child(1)]:-translate-y-[15px]  
-                        peer-hover/br:[&_h1>div:nth-child(2)]:-translate-x-[30px] peer-hover/br:[&_h1>div:nth-child(2)]:-translate-y-[30px]">
-                    <h1 id="magnetic-text"
-                        class="text-[6vw] sm:text-[5vw] lg:text-[4vw] font-black leading-[1.1] tracking-tight text-center opacity-90 select-none cursor-default w-fit mx-auto text-white">
-                        <!-- Content will be replaced by Canvas -->
-                        <div class="relative block">I'm a hands-on builder</div>
-                        <div class="relative block">who enjoys working where</div>
-                        <div class="relative block">technology, design,</div>
-                        <div class="relative block">and ideas meet.</div>
-                    </h1>
+                <!-- Detailed Content Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-8 pb-24">
+                    <!-- Column 1: Bio & Education (4 cols) -->
+                    <div class="md:col-span-4 flex flex-col gap-12">
+                        <!-- Bio -->
+                        <div class="flex flex-col gap-4">
+                            <h3 class="text-xs font-bold uppercase tracking-widest text-primary">Biography</h3>
+                            <p class="text-base md:text-lg leading-relaxed text-white/90 font-medium">
+                                I engineer digital experiences that merge function with aesthetics. My approach involves
+                                understanding the core problem and crafting solutions that feel rigorous yet intuitive.
+                            </p>
+                            <p class="text-sm md:text-base leading-relaxed text-white/70">
+                                Currently exploring the intersection of AI, design systems, and web performance to build
+                                tools that empower users.
+                            </p>
+                        </div>
+
+                        <!-- Education -->
+                        <div class="flex flex-col gap-4">
+                            <h3 class="text-xs font-bold uppercase tracking-widest text-primary">Education</h3>
+                            <div class="border-l-2 border-white/20 pl-4 py-1">
+                                <h4 class="text-lg font-bold text-white">B.Tech (EEE)</h4>
+                                <p class="text-sm text-white/70 font-mono mt-1">2nd Year</p>
+                                <p class="text-sm text-white/90 mt-2 font-medium">BVCOE, GGSIPU</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Column 2: What I Do (Services) (4 cols) -->
+                    <div class="md:col-span-4 flex flex-col gap-12">
+                        <div class="flex flex-col gap-6">
+                            <h3 class="text-xs font-bold uppercase tracking-widest text-primary">What I Do</h3>
+
+                            <div class="flex flex-col gap-4">
+                                <!-- Service 1 -->
+                                <div
+                                    class="group border border-white/10 bg-white/5 p-6 hover:bg-white/10 transition-colors cursor-default">
+                                    <div class="flex items-center justify-between mb-4">
+                                        <span
+                                            class="material-symbols-outlined text-2xl group-hover:text-primary transition-colors">code</span>
+                                        <span class="text-xs font-mono opacity-50">01</span>
+                                    </div>
+                                    <h4 class="text-lg font-bold mb-2">Web Development</h4>
+                                    <p class="text-xs text-white/70 leading-relaxed">
+                                        Building scalable, performant web applications using modern frameworks and
+                                        standard web technologies.
+                                    </p>
+                                </div>
+
+                                <!-- Service 2 -->
+                                <div
+                                    class="group border border-white/10 bg-white/5 p-6 hover:bg-white/10 transition-colors cursor-default">
+                                    <div class="flex items-center justify-between mb-4">
+                                        <span
+                                            class="material-symbols-outlined text-2xl group-hover:text-primary transition-colors">palette</span>
+                                        <span class="text-xs font-mono opacity-50">02</span>
+                                    </div>
+                                    <h4 class="text-lg font-bold mb-2">UI/UX Design</h4>
+                                    <p class="text-xs text-white/70 leading-relaxed">
+                                        Designing intuitive interfaces with a focus on usability, typography, and
+                                        motion.
+                                    </p>
+                                </div>
+
+                                <!-- Service 3 -->
+                                <div
+                                    class="group border border-white/10 bg-white/5 p-6 hover:bg-white/10 transition-colors cursor-default">
+                                    <div class="flex items-center justify-between mb-4">
+                                        <span
+                                            class="material-symbols-outlined text-2xl group-hover:text-primary transition-colors">auto_awesome</span>
+                                        <span class="text-xs font-mono opacity-50">03</span>
+                                    </div>
+                                    <h4 class="text-lg font-bold mb-2">AI Integration</h4>
+                                    <p class="text-xs text-white/70 leading-relaxed">
+                                        Leveraging AI models to create smarter applications and automate workflows.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Column 3: Stats / Highlights (4 cols) -->
+                    <div class="md:col-span-4 flex flex-col gap-12">
+                        <div class="flex flex-col gap-6">
+                            <h3 class="text-xs font-bold uppercase tracking-widest text-primary">Experience</h3>
+
+                            <div class="flex flex-col relative pl-2">
+                                <!-- Line -->
+                                <div
+                                    class="absolute left-0 top-2 bottom-2 w-px bg-gradient-to-b from-white/50 to-transparent">
+                                </div>
+
+                                <!-- Item 1 -->
+                                <div class="relative pl-6 pb-8">
+                                    <div class="absolute left-0 top-2 w-1.5 h-1.5 -ml-[3px] rounded-full bg-primary">
+                                    </div>
+                                    <h4 class="text-base font-bold text-white">Freelance Developer</h4>
+                                    <p class="text-xs font-mono text-white/60 mb-1">2023 - Present</p>
+                                    <p class="text-xs text-white/70">Delivering web solutions for various clients.</p>
+                                </div>
+
+                                <!-- Item 2 -->
+                                <div class="relative pl-6 pb-8">
+                                    <div class="absolute left-0 top-2 w-1.5 h-1.5 -ml-[3px] rounded-full bg-white">
+                                    </div>
+                                    <h4 class="text-base font-bold text-white">Open Source</h4>
+                                    <p class="text-xs font-mono text-white/60 mb-1">2022 - Present</p>
+                                    <p class="text-xs text-white/70">Contributing to community projects and tools.</p>
+                                </div>
+
+                                <!-- Item 3 -->
+                                <div class="relative pl-6">
+                                    <div class="absolute left-0 top-2 w-1.5 h-1.5 -ml-[3px] rounded-full bg-white/50">
+                                    </div>
+                                    <h4 class="text-base font-bold text-white">Started Coding</h4>
+                                    <p class="text-xs font-mono text-white/60 mb-1">2020</p>
+                                    <p class="text-xs text-white/70">Began the journey into tech.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </main>
 
-            <div class="relative z-20 flex w-full items-end justify-between mt-auto">
+            <div class="relative z-20 flex w-full items-end justify-between mt-auto pt-10 border-t border-white/10">
                 <div class="flex flex-col gap-6 md:gap-10">
                     <div class="hidden md:block">
                         <p class="text-xs font-bold uppercase tracking-widest mb-1">Since</p>
                         <p class="max-w-[280px] text-sm font-medium leading-relaxed">
                             December, 2004
                         </p>
-                    </div>
-                    <div class="flex items-center gap-2">
-                        <span class="material-symbols-outlined text-[20px] animate-bounce">south</span>
-                        <p class="text-xs font-bold uppercase tracking-widest">Scroll or Drag</p>
                     </div>
                 </div>
 
