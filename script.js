@@ -433,41 +433,158 @@ class ScrollManager {
     }
 }
 
-// Optimized smooth scrolling 
+// Optimized smooth scrolling — uses .scroll-container
 function scrollToSection(sectionId) {
     const section = document.getElementById(sectionId);
-    if (section) {
-        // Use native smooth scrolling with fallback 
-        if ('scrollBehavior' in document.documentElement.style) {
-            section.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        } else {
-            // Fallback smooth scroll animation 
-            const targetPosition = section.offsetTop;
-            const startPosition = window.pageYOffset;
-            const distance = targetPosition - startPosition;
-            const duration = 800;
-            let start = null;
-
-            function animation(currentTime) {
-                if (start === null) start = currentTime;
-                const timeElapsed = currentTime - start;
-                const run = easeInOutQuad(timeElapsed, startPosition, distance, duration);
-                window.scrollTo(0, run);
-                if (timeElapsed < duration) requestAnimationFrame(animation);
-            }
-
-            function easeInOutQuad(t, b, c, d) {
-                t /= d / 2;
-                if (t < 1) return c / 2 * t * t + b;
-                t--;
-                return -c / 2 * (t * (t - 2) - 1) + b;
-            }
-
-            requestAnimationFrame(animation);
-        }
+    const scroller = document.querySelector('.scroll-container');
+    if (section && scroller) {
+        scroller.scrollTo({
+            top: section.offsetTop,
+            behavior: 'smooth'
+        });
+    } else if (section) {
+        section.scrollIntoView({ behavior: 'smooth', block: 'start' });
     } else {
         console.warn(`Section with id '${sectionId}' not found`);
     }
+}
+
+// Scramble text utility (shared by hero and projects)
+function createScrambleEffect(element, words, interval, duration) {
+    if (!element) return;
+    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*";
+    let index = 0;
+
+    function scrambleText(newText) {
+        const oldText = element.innerText;
+        const length = Math.max(oldText.length, newText.length);
+        let frame = 0;
+
+        const anim = setInterval(() => {
+            let result = "";
+            element.style.opacity = Math.random() > 0.8 ? '0.7' : '1';
+
+            for (let i = 0; i < length; i++) {
+                if (i < newText.length && frame > (i / length) * duration + 5) {
+                    result += newText[i];
+                } else {
+                    result += chars[Math.floor(Math.random() * chars.length)];
+                }
+            }
+
+            element.innerText = result;
+            frame++;
+
+            if (frame > duration + 10) {
+                clearInterval(anim);
+                element.innerText = newText;
+                element.style.opacity = '1';
+            }
+        }, 30);
+    }
+
+    setInterval(() => {
+        index = (index + 1) % words.length;
+        scrambleText(words[index]);
+    }, interval);
+}
+
+// GSAP hero scroll animation (extracted from inline HTML)
+function initHeroScrollAnimation() {
+    if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+    gsap.registerPlugin(ScrollTrigger);
+
+    const scroller = document.querySelector(".scroll-container");
+    let mm = gsap.matchMedia();
+
+    // Desktop Animation (Move Image Right)
+    mm.add("(min-width: 641px)", () => {
+        const tl = gsap.timeline({
+            scrollTrigger: {
+                trigger: "#hero",
+                scroller: scroller,
+                start: "top top",
+                end: "+=100%",
+                scrub: 1,
+                pin: true,
+            }
+        });
+
+        tl.to(".hero-magazine-image", {
+            x: "25vw",
+            scale: 0.9,
+            ease: "power2.out"
+        }, "start")
+            .to("#hero-title-container", {
+                opacity: 0,
+                scale: 1.2,
+                ease: "power2.out"
+            }, "start")
+            .to(".hero-sub-overlay", {
+                opacity: 0,
+                y: 50,
+                ease: "power2.out"
+            }, "start")
+            .to(".hero-reveal-text", {
+                opacity: 1,
+                y: 0,
+                ease: "power2.out"
+            }, "start+=0.1");
+    });
+
+    // Mobile Animation (Keep Image Centered, no X movement)
+    mm.add("(max-width: 640px)", () => {
+        const tl = gsap.timeline({
+            scrollTrigger: {
+                trigger: "#hero",
+                scroller: scroller,
+                start: "top top",
+                end: "+=100%",
+                scrub: 1,
+                pin: true,
+            }
+        });
+
+        tl.to(".hero-magazine-image", {
+            scale: 0.9,
+            ease: "power2.out"
+        }, "start")
+            .to("#hero-title-container", {
+                opacity: 0,
+                scale: 1.2,
+                ease: "power2.out"
+            }, "start")
+            .to(".hero-sub-overlay", {
+                opacity: 0,
+                y: 50,
+                ease: "power2.out"
+            }, "start")
+            .to(".hero-reveal-text", {
+                opacity: 1,
+                y: 0,
+                ease: "power2.out"
+            }, "start+=0.1");
+    });
+}
+
+// Touch-toggle for project flip cards
+function initProjectCardTapToggle() {
+    const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    if (!isTouch) return;
+
+    const projectCards = document.querySelectorAll('.project-card');
+    projectCards.forEach(card => {
+        card.addEventListener('click', (e) => {
+            const inner = card.querySelector('.project-card-inner');
+            if (inner) {
+                // Close any other open cards
+                document.querySelectorAll('.project-card-inner.flipped').forEach(openCard => {
+                    if (openCard !== inner) openCard.classList.remove('flipped');
+                });
+                inner.classList.toggle('flipped');
+            }
+        });
+    });
 }
 
 // Optimized time update with RAF 
@@ -674,6 +791,25 @@ document.addEventListener('DOMContentLoaded', () => {
         if (cursor) cursor.style.display = 'none';
     }
 
+    // Initialize extracted inline animations
+    // Hero scramble text
+    createScrambleEffect(
+        document.getElementById('hero-title'),
+        ["DEVELOPER", "AI EXPLORER", "FREELANCER"],
+        4000, 30
+    );
+
+    // Projects scramble text
+    const dynamicHeader = document.getElementById('dynamic-header');
+    if (dynamicHeader) dynamicHeader.style.transition = 'none';
+    createScrambleEffect(dynamicHeader, ["PROJECTS", "IDEAS", "RESEARCHES", "STARTUPS"], 3000, 20);
+
+    // GSAP hero scroll animation
+    initHeroScrollAnimation();
+
+    // Touch-toggle for project flip cards
+    initProjectCardTapToggle();
+
     // Initialize Particle Text (Critical Feature - Init immediately)
     try {
         new ParticleText('magnetic-text');
@@ -745,10 +881,10 @@ class ParticleText {
         // Position canvas absolutely to cover the text
         // EXPANDED CANVAS: Make it larger than container to avoid clipping
         this.canvas.style.position = 'absolute';
-        this.canvas.style.top = '-50%'; // Offset to center the larger canvas
-        this.canvas.style.left = '-50%';
-        this.canvas.style.width = '200%'; // Double size to allow particles to fly out
-        this.canvas.style.height = '200%';
+        this.canvas.style.top = '-25%'; // Offset to center the larger canvas
+        this.canvas.style.left = '-25%';
+        this.canvas.style.width = '150%'; // 1.5x size to allow particles to fly out
+        this.canvas.style.height = '150%';
         this.canvas.style.zIndex = '50'; // Increased z-index ensuring visibility
         this.canvas.style.pointerEvents = 'none'; // Visual only, events handled by layer
 
@@ -889,8 +1025,8 @@ class ParticleText {
         if (!this.container || !this.canvas) return;
 
         // Canvas resolution should match display size
-        this.width = this.container.clientWidth * 2; // Match the 200% CSS width
-        this.height = this.container.clientHeight * 2; // Match the 200% CSS height
+        this.width = Math.round(this.container.clientWidth * 1.5); // Match the 150% CSS width
+        this.height = Math.round(this.container.clientHeight * 1.5); // Match the 150% CSS height
         this.canvas.width = this.width;
         this.canvas.height = this.height;
 
@@ -945,7 +1081,7 @@ class ParticleText {
         });
 
         const data = ctx.getImageData(0, 0, this.width, this.height).data;
-        const gap = 1; // Tight gap for solid text appearance
+        const gap = 2; // Balance: 4x fewer particles than gap=1, visually solid with size=3
 
         for (let py = 0; py < this.height; py += gap) {
             for (let px = 0; px < this.width; px += gap) {
@@ -960,18 +1096,40 @@ class ParticleText {
     }
 
     animate() {
-        this.ctx.clearRect(0, 0, this.width, this.height);
+        // Batch render using ImageData instead of individual fillRect calls
+        const imageData = this.ctx.createImageData(this.width, this.height);
+        const buf = imageData.data;
 
         let activeParticles = false;
 
-        this.particles.forEach(p => {
+        for (let i = 0, len = this.particles.length; i < len; i++) {
+            const p = this.particles[i];
             p.update();
-            p.draw(this.ctx);
 
-            if (Math.abs(p.x - p.originX) > 0.1 || Math.abs(p.y - p.originY) > 0.1 || Math.abs(p.vx) > 0.1 || Math.abs(p.vy) > 0.1) {
+            // Write pixel directly to ImageData buffer (batch rendering)
+            const px = Math.floor(p.x);
+            const py = Math.floor(p.y);
+            const size = p.size;
+            for (let dy = 0; dy < size; dy++) {
+                const row = py + dy;
+                if (row < 0 || row >= this.height) continue;
+                for (let dx = 0; dx < size; dx++) {
+                    const col = px + dx;
+                    if (col < 0 || col >= this.width) continue;
+                    const idx = (row * this.width + col) * 4;
+                    buf[idx] = 255;     // R
+                    buf[idx + 1] = 255; // G
+                    buf[idx + 2] = 255; // B
+                    buf[idx + 3] = 255; // A
+                }
+            }
+
+            if (Math.abs(p.x - p.originX) > 0.5 || Math.abs(p.y - p.originY) > 0.5 || Math.abs(p.vx) > 0.1 || Math.abs(p.vy) > 0.1) {
                 activeParticles = true;
             }
-        });
+        }
+
+        this.ctx.putImageData(imageData, 0, 0);
 
         // Keep animating if mouse is interacting
         if (this.mouse.x !== null) activeParticles = true;
@@ -993,25 +1151,23 @@ class Particle {
         this.y = y;
         this.vx = 0;
         this.vy = 0;
-        this.size = 2.5; // Slightly larger for overlap
-        this.color = '#ffffff'; // Default white
+        this.size = 3; // Larger size fills gaps between particles at gap=2
+        this.color = '#ffffff';
     }
 
     update() {
-        // Mouse interaction
+        // Mouse interaction — use squared distance to avoid Math.hypot/sqrt
         const dx = this.effect.mouse.x - this.x;
         const dy = this.effect.mouse.y - this.y;
-        const distance = Math.hypot(dx, dy);
+        const distSq = dx * dx + dy * dy;
         const forceDistance = this.effect.mouse.radius;
+        const forceDistSq = forceDistance * forceDistance;
 
-        // Stronger linear physics model
-        if (this.effect.mouse.x !== null && distance < forceDistance) {
+        if (this.effect.mouse.x !== null && distSq < forceDistSq) {
+            const distance = Math.sqrt(distSq); // Only sqrt when within radius
             const angle = Math.atan2(dy, dx);
-            // Force increases as distance decreases (0 to 1)
             const force = (forceDistance - distance) / forceDistance;
-            const repulsionStrength = 80; // Much stronger push
-
-            const push = force * repulsionStrength;
+            const push = force * 80;
 
             this.vx -= Math.cos(angle) * push;
             this.vy -= Math.sin(angle) * push;
@@ -1027,11 +1183,6 @@ class Particle {
 
         this.x += this.vx;
         this.y += this.vy;
-    }
-
-    draw(ctx) {
-        ctx.fillStyle = this.color;
-        ctx.fillRect(Math.floor(this.x), Math.floor(this.y), this.size, this.size);
     }
 }
 

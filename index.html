@@ -5,7 +5,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="theme-color" content="#0066ff">
-    <meta name="color-scheme" content="light">
+    <meta name="color-scheme" content="dark">
+    <meta name="description"
+        content="Ritesh Kumar Achal — Creative Developer, AI Explorer & Freelancer. Full Stack Engineer specializing in web development, UI/UX design, and AI integration.">
+    <!-- Open Graph -->
+    <meta property="og:title" content="Ritesh Kumar Achal — Portfolio">
+    <meta property="og:description"
+        content="Creative Developer, AI Explorer & Freelancer. Specializing in web development, UI/UX design, and AI integration.">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="./me.webp">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Ritesh Kumar Achal — Portfolio">
+    <meta name="twitter:description" content="Creative Developer, AI Explorer & Freelancer.">
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>"
+        type="image/svg+xml">
     <!-- Performance hints -->
     <link rel="dns-prefetch" href="//fonts.googleapis.com">
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -52,6 +66,13 @@
             document.body.classList.add('loaded');
         });
     </script>
+    <noscript>
+        <style>
+            body {
+                opacity: 1 !important;
+            }
+        </style>
+    </noscript>
 </head>
 
 <body class="bg-[#0a0a0a] font-display text-white selection:bg-primary selection:text-black"
@@ -68,8 +89,8 @@
     </div>
 
     <!-- Navigation -->
-    <nav
-        class="absolute top-0 left-0 w-full p-6 flex items-center justify-between z-50 mix-blend-multiply pointer-events-auto">
+    <nav class="absolute top-0 left-0 w-full p-6 flex items-center justify-between z-50 mix-blend-multiply pointer-events-auto"
+        aria-label="Main navigation">
         <div class="flex items-center gap-2">
             <div
                 class="flex size-8 items-center justify-center rounded-full border-2 border-black bg-black text-primary">
@@ -136,48 +157,7 @@
                         <span id="hero-title" data-text="DEVELOPER">DEVELOPER</span>
                     </div>
 
-                    <script>
-                        (function () {
-                            const heroTitle = document.getElementById('hero-title');
-                            const words = ["DEVELOPER", "AI EXPLORER", "FREELANCER"];
-                            let index = 0;
-                            const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*";
-
-                            function scrambleText(newText) {
-                                const oldText = heroTitle.innerText;
-                                const length = Math.max(oldText.length, newText.length);
-                                let frame = 0;
-                                const duration = 30;
-
-                                const interval = setInterval(() => {
-                                    let result = "";
-                                    heroTitle.style.opacity = Math.random() > 0.8 ? '0.7' : '1';
-
-                                    for (let i = 0; i < length; i++) {
-                                        if (i < newText.length && frame > (i / length) * duration + 5) {
-                                            result += newText[i];
-                                        } else {
-                                            result += chars[Math.floor(Math.random() * chars.length)];
-                                        }
-                                    }
-
-                                    heroTitle.innerText = result;
-                                    frame++;
-
-                                    if (frame > duration + 10) {
-                                        clearInterval(interval);
-                                        heroTitle.innerText = newText;
-                                        heroTitle.style.opacity = '1';
-                                    }
-                                }, 30);
-                            }
-
-                            setInterval(() => {
-                                index = (index + 1) % words.length;
-                                scrambleText(words[index]);
-                            }, 4000);
-                        })();
-                    </script>
+                    <!-- Hero scramble text animation handled in script.js -->
 
                     <!-- Layer 2: Image -->
                     <img src="./me.webp" alt="Ritesh" class="hero-magazine-image">
@@ -194,88 +174,7 @@
                         </h2>
                     </div>
 
-                    <script>
-                        document.addEventListener("DOMContentLoaded", (event) => {
-                            gsap.registerPlugin(ScrollTrigger);
-
-                            // Tell ScrollTrigger to use .scroll-container instead of the viewport
-                            // since body has overflow: hidden
-                            const scroller = document.querySelector(".scroll-container");
-
-                            let mm = gsap.matchMedia();
-
-                            // Desktop Animation (Move Image Right)
-                            mm.add("(min-width: 641px)", () => {
-                                const tl = gsap.timeline({
-                                    scrollTrigger: {
-                                        trigger: "#hero",
-                                        scroller: scroller,
-                                        start: "top top",
-                                        end: "+=100%",
-                                        scrub: 1,
-                                        pin: true,
-                                    }
-                                });
-
-                                tl.to(".hero-magazine-image", {
-                                    x: "25vw", // Move to the right on scroll
-                                    scale: 0.9,
-                                    ease: "power2.out"
-                                }, "start")
-                                    .to("#hero-title-container", {
-                                        opacity: 0,
-                                        scale: 1.2,
-                                        ease: "power2.out"
-                                    }, "start")
-                                    .to(".hero-sub-overlay", {
-                                        opacity: 0,
-                                        y: 50,
-                                        ease: "power2.out"
-                                    }, "start")
-                                    .to(".hero-reveal-text", {
-                                        opacity: 1,
-                                        y: 0,
-                                        ease: "power2.out"
-                                    }, "start+=0.1");
-                            });
-
-                            // Mobile Animation (Keep Image Centered)
-                            mm.add("(max-width: 640px)", () => {
-                                const tl = gsap.timeline({
-                                    scrollTrigger: {
-                                        trigger: "#hero",
-                                        scroller: scroller,
-                                        start: "top top",
-                                        end: "+=100%",
-                                        scrub: 1,
-                                        // Pinning might cause issues on mobile if viewport sizes change (address bar), 
-                                        // but keeping it for consistency. if jumpy, we can remove pin via matchMedia.
-                                        pin: true,
-                                    }
-                                });
-
-                                tl.to(".hero-magazine-image", {
-                                    scale: 0.9, // Just scale down slightly, no X movement
-                                    ease: "power2.out"
-                                }, "start")
-                                    .to("#hero-title-container", {
-                                        opacity: 0,
-                                        scale: 1.2,
-                                        ease: "power2.out"
-                                    }, "start")
-                                    .to(".hero-sub-overlay", {
-                                        opacity: 0,
-                                        y: 50,
-                                        ease: "power2.out"
-                                    }, "start")
-                                    .to(".hero-reveal-text", {
-                                        opacity: 1,
-                                        y: 0,
-                                        ease: "power2.out"
-                                    }, "start+=0.1");
-                            });
-                        });
-                    </script>
+                    <!-- GSAP hero scroll animation handled in script.js -->
 
                     <!-- Layer 3: Subtext overlay -->
                     <div class="hero-sub-overlay">
@@ -685,52 +584,7 @@
                         class="text-[18vw] md:text-[14vw] leading-[0.8] font-black tracking-tighter text-white select-none pointer-events-none transform skew-x-[-2deg]">
                         PROJECTS
                     </h1>
-                    <script>
-                        (function () {
-                            const header = document.getElementById('dynamic-header');
-                            const words = ["PROJECTS", "IDEAS", "RESEARCHES", "STARTUPS"];
-                            let index = 0;
-                            const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*";
-
-                            function scrambleText(newText) {
-                                const oldText = header.innerText;
-                                const length = Math.max(oldText.length, newText.length);
-                                let frame = 0;
-                                const duration = 20; // frames
-
-                                const interval = setInterval(() => {
-                                    let result = "";
-                                    // Flicker effect
-                                    header.style.opacity = Math.random() > 0.8 ? '0.5' : '1';
-
-                                    for (let i = 0; i < length; i++) {
-                                        if (i < newText.length && frame > (i / length) * duration + 5) {
-                                            result += newText[i];
-                                        } else {
-                                            result += chars[Math.floor(Math.random() * chars.length)];
-                                        }
-                                    }
-
-                                    header.innerText = result;
-                                    frame++;
-
-                                    if (frame > duration + 10) {
-                                        clearInterval(interval);
-                                        header.innerText = newText;
-                                        header.style.opacity = '1';
-                                    }
-                                }, 30);
-                            }
-
-                            setInterval(() => {
-                                index = (index + 1) % words.length;
-                                scrambleText(words[index]);
-                            }, 3000); // Change every 3 seconds
-
-                            // Remove CSS transition to allow rapid flicker
-                            header.style.transition = 'none';
-                        })();
-                    </script>
+                    <!-- Projects scramble text animation handled in script.js -->
                 </div>
 
                 <!-- Project Cards Grid: 2 rows x 5 cards -->
@@ -1196,11 +1050,11 @@
                 <nav
                     class="flex flex-col items-start gap-1 md:gap-4 relative mt-8 lg:mt-auto lg:mb-12 w-full max-w-[90vw]">
                     <!-- Phone -->
-                    <a class="group flex items-center w-full border-b-[3px] border-white/20 hover:border-white transition-colors py-2 md:py-4 relative overflow-hidden"
-                        href="tel:9315158312">
+                    <a class="group flex items-center w-full border-b-[3px] border-white/20 hover:border-white transition-colors py-3 md:py-4 relative overflow-hidden"
+                        href="tel:9315158312" aria-label="Call 9315158312">
                         <div class="parallax-element flex items-center gap-6 z-10" data-speed="0.04">
                             <span
-                                class="text-white group-hover:text-black transition-colors duration-200 text-3xl md:text-5xl lg:text-6xl font-black uppercase tracking-tighter"
+                                class="text-white group-hover:text-black transition-colors duration-200 text-4xl md:text-5xl lg:text-6xl font-black uppercase tracking-tighter"
                                 style="transform: scaleY(1.1); letter-spacing: -0.04em; display: inline-block;">Call:
                                 9315158312</span>
                             <span
@@ -1212,11 +1066,12 @@
                     </a>
 
                     <!-- WhatsApp -->
-                    <a class="group flex items-center w-full border-b-[3px] border-white/20 hover:border-white transition-colors py-2 md:py-4 relative overflow-hidden"
-                        href="https://wa.me/919315158312" target="_blank">
+                    <a class="group flex items-center w-full border-b-[3px] border-white/20 hover:border-white transition-colors py-3 md:py-4 relative overflow-hidden"
+                        href="https://wa.me/919315158312" target="_blank" rel="noopener noreferrer"
+                        aria-label="Message on WhatsApp">
                         <div class="parallax-element flex items-center gap-6 z-10" data-speed="0.04">
                             <span
-                                class="text-white group-hover:text-black transition-colors duration-200 text-3xl md:text-5xl lg:text-6xl font-black uppercase tracking-tighter"
+                                class="text-white group-hover:text-black transition-colors duration-200 text-4xl md:text-5xl lg:text-6xl font-black uppercase tracking-tighter"
                                 style="transform: scaleY(1.1); letter-spacing: -0.04em; display: inline-block;">WhatsApp</span>
                             <span
                                 class="material-symbols-outlined text-2xl md:text-4xl lg:text-5xl opacity-0 -translate-x-10 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-300 text-white group-hover:text-black">chat</span>
@@ -1227,11 +1082,12 @@
                     </a>
 
                     <!-- Instagram -->
-                    <a class="group flex items-center w-full border-b-[3px] border-white/20 hover:border-white transition-colors py-2 md:py-4 relative overflow-hidden"
-                        href="https://www.instagram.com/rk_achal?igsh=bzlndGZjN2hkOThq" target="_blank">
+                    <a class="group flex items-center w-full border-b-[3px] border-white/20 hover:border-white transition-colors py-3 md:py-4 relative overflow-hidden"
+                        href="https://www.instagram.com/rk_achal?igsh=bzlndGZjN2hkOThq" target="_blank"
+                        rel="noopener noreferrer" aria-label="Follow on Instagram">
                         <div class="parallax-element flex items-center gap-6 z-10" data-speed="0.04">
                             <span
-                                class="text-white group-hover:text-black transition-colors duration-200 text-3xl md:text-5xl lg:text-6xl font-black uppercase tracking-tighter"
+                                class="text-white group-hover:text-black transition-colors duration-200 text-4xl md:text-5xl lg:text-6xl font-black uppercase tracking-tighter"
                                 style="transform: scaleY(1.1); letter-spacing: -0.04em; display: inline-block;">Instagram</span>
                             <span
                                 class="material-symbols-outlined text-2xl md:text-4xl lg:text-5xl opacity-0 -translate-x-10 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-300 text-white group-hover:text-black">photo_camera</span>
@@ -1242,11 +1098,12 @@
                     </a>
 
                     <!-- LinkedIn -->
-                    <a class="group flex items-center w-full border-b-[3px] border-white/20 hover:border-white transition-colors py-2 md:py-4 relative overflow-hidden"
-                        href="https://www.linkedin.com/in/ritesh-kumar-achal/" target="_blank">
+                    <a class="group flex items-center w-full border-b-[3px] border-white/20 hover:border-white transition-colors py-3 md:py-4 relative overflow-hidden"
+                        href="https://www.linkedin.com/in/ritesh-kumar-achal/" target="_blank" rel="noopener noreferrer"
+                        aria-label="Connect on LinkedIn">
                         <div class="parallax-element flex items-center gap-6 z-10" data-speed="0.04">
                             <span
-                                class="text-white group-hover:text-black transition-colors duration-200 text-3xl md:text-5xl lg:text-6xl font-black uppercase tracking-tighter"
+                                class="text-white group-hover:text-black transition-colors duration-200 text-4xl md:text-5xl lg:text-6xl font-black uppercase tracking-tighter"
                                 style="transform: scaleY(1.1); letter-spacing: -0.04em; display: inline-block;">LinkedIn</span>
                             <span
                                 class="material-symbols-outlined text-2xl md:text-4xl lg:text-5xl opacity-0 -translate-x-10 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-300 text-white group-hover:text-black">group</span>
@@ -1257,11 +1114,12 @@
                     </a>
 
                     <!-- GitHub -->
-                    <a class="group flex items-center w-full border-b-[3px] border-white/20 hover:border-white transition-colors py-2 md:py-4 relative overflow-hidden"
-                        href="https://github.com/Rkn-hub" target="_blank">
+                    <a class="group flex items-center w-full border-b-[3px] border-white/20 hover:border-white transition-colors py-3 md:py-4 relative overflow-hidden"
+                        href="https://github.com/Rkn-hub" target="_blank" rel="noopener noreferrer"
+                        aria-label="View GitHub profile">
                         <div class="parallax-element flex items-center gap-6 z-10" data-speed="0.04">
                             <span
-                                class="text-white group-hover:text-black transition-colors duration-200 text-3xl md:text-5xl lg:text-6xl font-black uppercase tracking-tighter"
+                                class="text-white group-hover:text-black transition-colors duration-200 text-4xl md:text-5xl lg:text-6xl font-black uppercase tracking-tighter"
                                 style="transform: scaleY(1.1); letter-spacing: -0.04em; display: inline-block;">GitHub</span>
                             <span
                                 class="material-symbols-outlined text-2xl md:text-4xl lg:text-5xl opacity-0 -translate-x-10 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-300 text-white group-hover:text-black">code</span>

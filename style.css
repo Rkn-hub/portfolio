@@ -9,16 +9,32 @@
             --glow-color: rgba(0, 102, 255, 0.15);
         }
 
-        /* Prevent FOUC (Flash of Unstyled Content) */
+        /* ========== Body (merged) ========== */
         body {
+            cursor: none;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            height: 100vh;
+            height: 100dvh;
+            overflow-y: hidden;
             opacity: 0;
             background-color: var(--bg-dark);
             background-image: radial-gradient(ellipse at 50% 0%, var(--glow-color) 0%, transparent 60%);
             transition: opacity 0.1s ease-in;
+            /* Safe area insets for notched devices */
+            padding-top: env(safe-area-inset-top);
+            padding-left: env(safe-area-inset-left);
+            padding-right: env(safe-area-inset-right);
         }
 
         body.loaded {
             opacity: 1;
+        }
+
+        /* Noscript fallback: if JS fails, body stays visible */
+        .noscript-visible {
+            opacity: 1 !important;
         }
 
         /* Utility for 3D card flips */
@@ -27,38 +43,47 @@
             -webkit-backface-visibility: hidden;
         }
 
-        body {
-            cursor: none;
-            margin: 0;
-            padding: 0;
-            overflow-x: hidden;
-            height: 100vh;
-            overflow-y: hidden;
-        }
-
+        /* ========== Scroll Container ========== */
         .scroll-container {
             height: 100vh;
+            height: 100dvh;
             overflow-y: scroll;
-            /* Scroll snap removed for GSAP control */
-            /* scroll-snap-type: y mandatory; */
             scroll-behavior: smooth;
         }
 
+        /* ========== Section (merged, single definition) ========== */
         .section {
-            /* scroll-snap-align: start; */
-            /* scroll-snap-stop: always; */
+            scroll-snap-align: start;
             height: 100vh;
+            height: 100dvh;
             min-height: 100vh;
+            min-height: 100dvh;
             width: 100vw;
             position: relative;
             display: flex;
             flex-direction: column;
-            /* transform: translateZ(0); Removed to allow GSAP pinning */
+            overflow: hidden;
+            transform: translateZ(0);
             backface-visibility: hidden;
             box-sizing: border-box;
             contain: layout style;
+            background-color: var(--bg-dark);
         }
 
+        /* Fix for overlapping sections */
+        .section:not(:first-child) {
+            margin-top: 0;
+        }
+
+        /* Fallback for browsers without scroll-snap */
+        @supports not (scroll-snap-type: y mandatory) {
+            .section {
+                position: relative;
+                display: block;
+            }
+        }
+
+        /* ========== Custom Cursor ========== */
         .custom-cursor {
             pointer-events: none;
             position: fixed;
@@ -74,6 +99,7 @@
             backface-visibility: hidden;
         }
 
+        /* ========== Parallax & Glitch ========== */
         .parallax-text {
             will-change: transform;
             backface-visibility: hidden;
@@ -172,6 +198,7 @@
             }
         }
 
+        /* ========== UI Elements ========== */
         .scanlines {
             background: repeating-linear-gradient(to bottom,
                     transparent,
@@ -188,6 +215,7 @@
             background: rgba(255, 255, 255, 0.1);
             width: 100%;
             z-index: 50;
+            padding-bottom: env(safe-area-inset-bottom);
         }
 
         .progress-fill {
@@ -198,7 +226,7 @@
             backface-visibility: hidden;
         }
 
-        /* Performance optimizations for low-end devices */
+        /* ========== Performance Optimizations ========== */
         .low-performance * {
             animation-duration: 0s !important;
             transition-duration: 0s !important;
@@ -207,36 +235,6 @@
         .low-performance .glitch-text::before,
         .low-performance .glitch-text::after {
             display: none;
-        }
-
-        /* Hardware acceleration for key elements */
-        .section {
-            scroll-snap-align: start;
-            height: 100vh;
-            min-height: 100vh;
-            width: 100vw;
-            position: relative;
-            overflow: hidden;
-            transform: translateZ(0);
-            backface-visibility: hidden;
-            box-sizing: border-box;
-            background-color: var(--bg-dark);
-            /* Force background to hide previous sections */
-        }
-
-        /* Fix for overlapping sections */
-        .section:not(:first-child) {
-            margin-top: 0;
-        }
-
-        /* Scroll snap support block removed */
-
-        /* Fallback for browsers without scroll-snap */
-        @supports not (scroll-snap-type: y mandatory) {
-            .section {
-                position: relative;
-                display: block;
-            }
         }
 
         /* Floating animation with hardware acceleration */
@@ -258,7 +256,7 @@
             backface-visibility: hidden;
         }
 
-        /* Enhanced Gallery Card Hover */
+        /* ========== Gallery ========== */
         .gallery-card {
             transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
             will-change: transform, opacity;
@@ -270,9 +268,7 @@
             z-index: 50;
         }
 
-
-
-        /* 3D Sphere Styles */
+        /* ========== 3D Sphere ========== */
         .sphere-wrapper {
             position: relative;
             width: 100%;
@@ -303,16 +299,12 @@
             animation: rotateSphere 15s infinite linear;
         }
 
-        /* ... .sphere-card styles ... */
-        /* End Sphere Styles */
-
         .sphere-card {
             position: absolute;
             top: 50%;
             left: 50%;
             width: 140px;
             height: 180px;
-            /* background/border moved to faces for flip effect */
             background: transparent;
             border: none;
             box-shadow: none;
@@ -323,22 +315,17 @@
             align-items: center;
             justify-content: center;
             pointer-events: auto;
-            /* Enable interaction */
         }
 
         .sphere-card.even {
             cursor: pointer;
         }
 
-        /* Pause rotation when hovering a card - handled via JS for reliability */
-
         .sphere-card:hover {
             z-index: 100;
-            /* Just ensure it's slightly elevated in stack but no huge transform */
-            /* We rely on overlay for the big view now */
         }
 
-        /* Flip Logic & Hover Effects */
+        /* Flip Logic */
         .flip-wrapper {
             position: relative;
             width: 100%;
@@ -346,26 +333,6 @@
             transform-style: preserve-3d;
             transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1);
         }
-
-        /* Even cards: Flip animation inside the small card is fine, or we can disable it if overlay is enough.
-           Let's keep the flip on the small card as a micro-interaction. */
-        /* Removed hover flip to prevent messiness. Click interaction handles detailed view. */
-        /* .sphere-card.even:hover .flip-wrapper {
-            transform: rotateY(180deg);
-        } */
-
-        /* Odd cards: No huge scale */
-        .card-face {
-            transition: transform 0.4s ease;
-        }
-
-        .sphere-card.odd:hover .card-face {
-            /* Minimal lift */
-            transform: translateZ(20px);
-            box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.3);
-        }
-
-
 
         .card-face {
             position: absolute;
@@ -383,6 +350,7 @@
             box-shadow: 0 4px 10px rgba(0, 102, 255, 0.2);
             font-family: 'Space Grotesk', sans-serif;
             color: white;
+            transition: transform 0.4s ease;
         }
 
         .card-face::after {
@@ -406,6 +374,12 @@
             text-align: center;
             z-index: 1;
             border-color: var(--primary);
+        }
+
+        /* Odd cards hover */
+        .sphere-card.odd:hover .card-face {
+            transform: translateZ(20px);
+            box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.3);
         }
 
         /* Typography for Faces */
@@ -463,7 +437,6 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            /* Filter to assimilate with the red theme if needed, or keep original */
             filter: grayscale(100%) contrast(1.2);
             transition: filter 0.3s ease;
         }
@@ -498,7 +471,7 @@
             100% {}
         }
 
-        /* Text Flip Animation */
+        /* ========== Text Flip Animation ========== */
         .char-wrapper {
             display: inline-grid;
             grid-template-areas: "stack";
@@ -519,15 +492,11 @@
             display: inline-block;
             backface-visibility: hidden;
             width: max-content;
-
-            /* Smooth sizing transition */
             max-width: 2em;
-            /* Ensure it accommodates wide chars initially */
             opacity: 1;
             transition: max-width 0.4s ease-out 0.15s, opacity 0.4s ease-out 0.15s;
             overflow: hidden;
             vertical-align: baseline;
-            /* Align correctly during resize */
         }
 
         .char-wrapper span.collapsed {
@@ -544,8 +513,12 @@
             transform: rotateX(180deg);
         }
 
+        /* ========== Project Card Flip (Touch Support) ========== */
+        .project-card-inner.flipped {
+            transform: rotateY(180deg) !important;
+        }
 
-        /* Responsive Media Queries */
+        /* ========== Responsive Media Queries ========== */
 
         /* 1. Touch Device Optimizations */
         @media (hover: none) and (pointer: coarse) {
@@ -563,36 +536,53 @@
             .cursor-pointer {
                 cursor: pointer !important;
             }
+
+            /* Disable hover-flip on touch — use tap toggle instead */
+            .project-card .group-hover\:\[transform\:rotateY\(180deg\)\] {
+                transform: none !important;
+            }
         }
 
-        /* 2. Mobile Layout (< 640px) */
         /* 2. Mobile Layout (< 640px) */
         @media (max-width: 640px) {
 
             .sphere-mover,
             .sphere-container {
-                width: 250px;
-                height: 250px;
-                /* Center the sphere better */
+                width: 300px;
+                height: 300px;
                 margin: 0 auto;
             }
 
             .sphere-wrapper {
-                /* Center vertically by taking up space */
                 flex-grow: 1;
                 margin-top: 0;
-                transform: scale(0.85);
-                /* Slightly smaller to fit */
+                transform: scale(0.9);
             }
 
             .sphere-card {
-                width: 70px;
-                height: 96px;
+                width: 100px;
+                height: 130px;
             }
 
-            /* Ensure text is readable on mobile */
+            /* Readable text on mobile sphere cards */
             .sphere-card .card-face span.number {
-                font-size: 1.2rem;
+                font-size: 1.5rem;
+            }
+
+            .sphere-card .card-face span.label {
+                font-size: 0.6rem;
+            }
+
+            .sphere-card .card-face span.sub {
+                font-size: 0.45rem;
+            }
+
+            .sphere-card .card-face.back h3 {
+                font-size: 0.65rem;
+            }
+
+            .sphere-card .card-face.back p {
+                font-size: 0.45rem;
             }
 
             /* Reduce title margin to give sphere more space */
@@ -609,9 +599,8 @@
             #about,
             #contact {
                 min-height: auto !important;
-                /* Allow collapse */
                 padding-bottom: 4rem;
-                /* Adequate spacing */
+                padding-bottom: calc(4rem + env(safe-area-inset-bottom));
             }
 
             /* Hero text adjustment */
@@ -627,19 +616,17 @@
 
             .gallery-card {
                 box-shadow: none !important;
-                /* Performance */
             }
         }
 
         /* 3. Landscape/Tablet Adjustments */
         @media (max-width: 1024px) {
-
-            /* Adjust sphere positioning if needed */
             .sphere-wrapper {
                 transform: scale(0.9);
             }
         }
 
+        /* ========== Hero Magazine Layout ========== */
         .hero-magazine-wrapper {
             position: relative;
             width: 100%;
@@ -671,13 +658,12 @@
             bottom: 0;
             left: 50%;
             transform: translateX(-50%);
-            /* Start Centered */
             height: 85vh;
+            height: 85dvh;
             max-height: 95%;
             width: auto;
             max-width: none;
             z-index: 20;
-            /* In front of text */
             object-fit: contain;
             filter: drop-shadow(0 0 50px rgba(0, 0, 0, 0.5));
             pointer-events: none;
@@ -686,6 +672,7 @@
         .hero-sub-overlay {
             position: absolute;
             bottom: 10vh;
+            bottom: 10dvh;
             left: 50%;
             transform: translateX(-50%);
             z-index: 30;
@@ -694,7 +681,7 @@
             max-width: 600px;
         }
 
-        /* Mobile Menu Styles */
+        /* ========== Mobile Menu ========== */
         .mobile-menu {
             transform: translateX(100%);
             transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
@@ -704,6 +691,7 @@
             transform: translateX(0);
         }
 
+        /* ========== Text Flip Wrapper ========== */
         .text-flip-wrapper {
             overflow: hidden;
             height: 1.2em;
@@ -719,16 +707,23 @@
         .group:hover .text-flip {
             transform: translateY(-50%);
         }
-/* About Section Expansion */
-#about {
-    height: auto !important;
-    min-height: 100vh;
-    overflow-y: visible !important;
-}
 
-/* Service Card Glow Effect */
-.group:hover .material-symbols-outlined {
-    text-shadow: 0 0 15px var(--primary);
-    transform: scale(1.1);
-    transition: all 0.3s ease;
-}
+        /* ========== About Section ========== */
+        #about {
+            height: auto !important;
+            min-height: 100vh;
+            min-height: 100dvh;
+            overflow-y: visible !important;
+        }
+
+        /* Service Card Glow Effect */
+        .group:hover .material-symbols-outlined {
+            text-shadow: 0 0 15px var(--primary);
+            transform: scale(1.1);
+            transition: all 0.3s ease;
+        }
+
+        /* ========== Navigation Safe Area ========== */
+        nav {
+            padding-top: env(safe-area-inset-top);
+        }
