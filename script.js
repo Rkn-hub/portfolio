@@ -78,7 +78,7 @@ class AnimationEngine {
             const z = Math.sin(theta) * radius;
 
             // Scale position
-            const scale = 380; // Increased radius for bigger sphere
+            const scale = 320; // Radius for sphere
 
             const card = document.createElement('div');
             // All cards are text cards
@@ -131,7 +131,7 @@ class AnimationEngine {
             const clone = card.cloneNode(true);
             clone.style.transform = 'none'; // remove 3d transform
             clone.style.position = 'relative'; // reset position
-            clone.className = `relative w-[140px] h-[190px] md:w-[170px] md:h-[230px] lg:w-[190px] lg:h-[254px] flex-shrink-0 sphere-card-clone even`;
+            clone.className = `relative w-[130px] h-[174px] md:w-[150px] md:h-[200px] lg:w-[160px] lg:h-[214px] flex-shrink-0 sphere-card-clone even`;
             
             // Force flip if it's text card
             const wrapper = clone.querySelector('.flip-wrapper');

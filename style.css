@@ -303,8 +303,8 @@
             position: absolute;
             top: 50%;
             left: 50%;
-            width: 220px;
-            height: 290px;
+            width: 160px;
+            height: 214px;
             background: transparent;
             border: none;
             box-shadow: none;
@@ -391,13 +391,13 @@
 
         /* Typography for Faces */
         .card-face span.number {
-            font-size: 3.5rem;
+            font-size: 2.5rem;
             font-weight: 900;
             line-height: 1;
         }
 
         .card-face span.label {
-            font-size: 0.9rem;
+            font-size: 0.75rem;
             font-weight: 800;
             text-transform: uppercase;
             letter-spacing: 0.05em;
@@ -406,7 +406,7 @@
         }
 
         .card-face span.sub {
-            font-size: 0.65rem;
+            font-size: 0.55rem;
             font-weight: 600;
             text-transform: uppercase;
             opacity: 0.6;
@@ -416,7 +416,7 @@
 
         /* Back face text */
         .card-face.back h3 {
-            font-size: 1.1rem;
+            font-size: 0.9rem;
             font-weight: 900;
             text-transform: uppercase;
             margin-bottom: 0.6rem;
@@ -424,7 +424,7 @@
         }
 
         .card-face.back p {
-            font-size: 0.75rem;
+            font-size: 0.65rem;
             font-weight: 700;
             line-height: 1.5;
             color: #111;
