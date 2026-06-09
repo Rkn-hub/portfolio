@@ -467,18 +467,14 @@
 
         @keyframes revolveSphere {
             0% {
-                transform: rotateX(-15deg) rotateZ(-5deg) translateY(-100px);
+                transform: rotateX(-15deg) rotateZ(-5deg);
             }
-
-            30% {
-                transform: rotateX(45deg) rotateZ(25deg) translateY(-140px);
+            50% {
+                transform: rotateX(20deg) rotateZ(10deg);
             }
-
-            60% {
-                transform: rotateX(125deg) rotateZ(125deg) translateY(-60px);
+            100% {
+                transform: rotateX(-15deg) rotateZ(-5deg);
             }
-
-            100% {}
         }
 
         /* ========== Text Flip Animation ========== */
