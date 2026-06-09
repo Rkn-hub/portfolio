@@ -303,8 +303,8 @@
             position: absolute;
             top: 50%;
             left: 50%;
-            width: 140px;
-            height: 180px;
+            width: 220px;
+            height: 290px;
             background: transparent;
             border: none;
             box-shadow: none;
@@ -341,23 +341,29 @@
             height: 100%;
             -webkit-backface-visibility: hidden;
             backface-visibility: hidden;
-            background: var(--bg-dark);
-            border: 2px solid white;
+            background: linear-gradient(50deg, #c7d3dc, #d9e7f1);
+            background-size: 1px 25px;
+            border-radius: 30px;
+            border: 1px solid #839db0;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 4px 10px rgba(0, 102, 255, 0.2);
+            box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 50px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 26px -18px inset;
             font-family: 'Space Grotesk', sans-serif;
-            color: white;
-            transition: transform 0.4s ease;
+            color: #0a0a0a;
+            transition: all 0.3s ease-in-out;
+            -webkit-transition: all 1s ease-out;
+            -moz-transition: all 1s ease-out;
+            -o-transition: all 1s ease-out;
         }
 
         .card-face::after {
             content: '';
             position: absolute;
             inset: 4px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 26px;
             pointer-events: none;
         }
 
@@ -368,12 +374,13 @@
 
         .card-face.back {
             transform: rotateY(180deg);
-            background: var(--primary);
-            color: white;
+            background: linear-gradient(50deg, #c7d3dc, #d9e7f1);
+            background-size: 1px 25px;
+            color: #0a0a0a;
             padding: 1rem;
             text-align: center;
             z-index: 1;
-            border-color: var(--primary);
+            border-color: #839db0;
         }
 
         /* Odd cards hover */
@@ -384,49 +391,51 @@
 
         /* Typography for Faces */
         .card-face span.number {
-            font-size: 3rem;
+            font-size: 3.5rem;
             font-weight: 900;
             line-height: 1;
         }
 
         .card-face span.label {
-            font-size: 0.75rem;
-            font-weight: 700;
+            font-size: 0.9rem;
+            font-weight: 800;
             text-transform: uppercase;
-            letter-spacing: 0.1em;
-            margin-top: 0.5rem;
+            letter-spacing: 0.05em;
+            margin-top: 0.8rem;
+            text-align: center;
         }
 
         .card-face span.sub {
-            font-size: 0.5rem;
-            font-weight: 500;
+            font-size: 0.65rem;
+            font-weight: 600;
             text-transform: uppercase;
             opacity: 0.6;
             letter-spacing: 0.1em;
+            margin-top: 0.4rem;
         }
 
         /* Back face text */
         .card-face.back h3 {
-            font-size: 0.8rem;
-            font-weight: 700;
+            font-size: 1.1rem;
+            font-weight: 900;
             text-transform: uppercase;
-            margin-bottom: 0.5rem;
-            color: #fff;
+            margin-bottom: 0.6rem;
+            color: #0a0a0a;
         }
 
         .card-face.back p {
-            font-size: 0.5rem;
-            font-weight: 500;
-            line-height: 1.4;
-            color: #fff;
+            font-size: 0.75rem;
+            font-weight: 700;
+            line-height: 1.5;
+            color: #111;
             opacity: 0.8;
         }
 
-        /* Odd Card (Image Holder) Specifics */
         .sphere-card.odd .card-face.front {
             padding: 0;
             background: #000;
             overflow: hidden;
+            border-radius: 30px;
         }
 
         .sphere-card.odd .card-face::after {
@@ -439,6 +448,7 @@
             object-fit: cover;
             filter: grayscale(100%) contrast(1.2);
             transition: filter 0.3s ease;
+            border-radius: 30px;
         }
 
         .sphere-card.odd:hover img.skill-img {
@@ -537,9 +547,22 @@
                 cursor: pointer !important;
             }
 
-            /* Disable hover-flip on touch — use tap toggle instead */
-            .project-card .group-hover\:\[transform\:rotateY\(180deg\)\] {
+            /* Disable hover-flip on touch — use tap toggle instead, but allow .flipped */
+            .project-card .project-card-inner:not(.flipped) {
                 transform: none !important;
+            }
+
+            /* Disable quadrant hover grid on touch — it blocks ParticleText touch events */
+            #about .grid-cols-2.grid-rows-2 {
+                pointer-events: none !important;
+                display: none !important;
+            }
+
+            /* Let the ParticleText interaction layer receive touch events */
+            #magnetic-text {
+                pointer-events: auto !important;
+                position: relative;
+                z-index: 40;
             }
         }
 
@@ -651,6 +674,8 @@
             pointer-events: none;
             letter-spacing: -0.05em;
             text-transform: uppercase;
+            width: 100%;
+            text-align: center;
         }
 
         .hero-magazine-image {
@@ -727,3 +752,94 @@
         nav {
             padding-top: env(safe-area-inset-top);
         }
+
+/* Custom Card Flip */
+.custom-card {
+  width: 100%;
+  min-height: 180px;
+  aspect-ratio: 3 / 4;
+  background: rgb(15, 15, 15);
+  transition: all 0.4s;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.705);
+  font-size: 1.25rem;
+  font-weight: 900;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+.custom-card:hover {
+  border-radius: 15px;
+  cursor: pointer;
+  transform: scale(1.03);
+  box-shadow: 0px 0px 20px 8px rgba(0, 0, 0, 0.9);
+  background: rgb(0, 0, 0);
+  z-index: 10;
+  border: 1px solid rgba(255,255,255,0.3);
+}
+
+.first-content {
+  height: 100%;
+  width: 100%;
+  transition: all 0.4s;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  opacity: 1;
+  border-radius: inherit;
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 1rem;
+  text-align: center;
+}
+
+.custom-card:hover .first-content {
+  height: 0px;
+  opacity: 0;
+}
+
+.second-content {
+  height: 0%;
+  width: 100%;
+  opacity: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: inherit;
+  transition: all 0.4s;
+  font-size: 0px;
+  transform: rotate(90deg) scale(-1);
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 1.2rem;
+  text-align: center;
+}
+
+.custom-card:hover .second-content {
+  opacity: 1;
+  height: 100%;
+  font-size: 0.82rem;
+  transform: rotate(0deg);
+}
+
+.custom-card .first-content span.proj-title {
+  color: white;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  font-size: clamp(1rem, 2vw, 1.75rem);
+  font-weight: 900;
+  line-height: 1.2;
+}
+
+.custom-card .second-content span.proj-desc {
+  color: white;
+  font-weight: 700;
+  line-height: 1.4;
+  font-size: clamp(0.85rem, 1.2vw, 1.25rem);
+}
+

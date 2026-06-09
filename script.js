@@ -46,84 +46,27 @@ class AnimationEngine {
 
         // New Skills Data
         const skills = [
-            {
-                title: "MVP PLANNING",
-                sub: "STRATEGY",
-                details: "User-first workflows<br>System-level thinking"
-            },
-            {
-                title: "WEB DEVELOPMENT",
-                sub: "CODE",
-                details: "HTML, CSS, JS<br>Python (Basics/Auto)<br>Frontend Logic"
-            },
-            {
-                title: "UI/UX DESIGN",
-                sub: "UI/UX",
-                details: "UI/UX Fundamentals<br>Figma & Canva<br>Visual Hierarchy"
-            },
-            {
-                title: "AI & EXP.",
-                sub: "R&D",
-                details: "AI & Content Tools<br>Workflow Automation<br>Realism Experiments"
-            },
-            {
-                title: "STARTUP OPERATIONS",
-                sub: "EXECUTION",
-                details: "Early-stage execution<br>Branding & Positioning<br>Team Coordination"
-            },
-            {
-                title: "PHOTOGRAPHY",
-                sub: "VISUALS",
-                details: "Visual Storytelling<br>Composition & Lighting<br>Editing & Color Grading"
-            },
-            {
-                title: "LEADERSHIP",
-                sub: "MANAGEMENT",
-                details: "Team Building<br>Project Management<br>Decision Making"
-            },
-            {
-                title: "APP DEV",
-                sub: "LEARNING",
-                details: "Mobile Development<br>Cross-platform Apps<br>Currently Exploring"
-            },
-            {
-                title: "GRAPHIC DESIGN",
-                sub: "CREATIVE",
-                details: "Visual Identity<br>Digital Graphics<br>Brand Assets"
-            },
-            {
-                title: "3D MODELING",
-                sub: "3D ART",
-                details: "3D Visualization<br>Model Creation<br>Rendering & Texturing"
-            },
-            {
-                title: "VIDEO EDITING",
-                sub: "MOTION",
-                details: "Video Production<br>Motion Graphics<br>Post-production"
-            },
-            {
-                title: "SKETCHING",
-                sub: "ART",
-                details: "Conceptual Sketches<br>Hand Drawing<br>Creative Ideation"
-            },
-            {
-                title: "PROGRAMMING",
-                sub: "LANGUAGES",
-                details: "Java, C, C++<br>HTML, CSS<br>Python"
-            }
+            { title: "PROBLEM SOLVING", sub: "MINDSET", details: "Troubleshooting<br>Strategic Solutions" },
+            { title: "COMMUNICATION", sub: "SOFT SKILL", details: "Clear Articulation<br>Active Listening" },
+            { title: "TEAMWORK", sub: "COLLABORATION", details: "Cross-functional<br>Supportive Environment" },
+            { title: "LEADERSHIP", sub: "MANAGEMENT", details: "Guidance<br>Vision & Execution" },
+            { title: "TIME MANAGEMENT", sub: "EFFICIENCY", details: "Prioritization<br>Meeting Deadlines" },
+            { title: "PROJECT MANAGEMENT", sub: "OPERATIONS", details: "Agile & Scrum<br>Resource Allocation" },
+            { title: "CRITICAL THINKING", sub: "ANALYSIS", details: "Objective Evaluation<br>Logical Reasoning" },
+            { title: "ADAPTABILITY", sub: "FLEXIBILITY", details: "Embracing Change<br>Quick Learning" },
+            { title: "GRAPHIC DESIGN", sub: "CREATIVITY", details: "Visual Communication<br>Branding & Layout" },
+            { title: "RESEARCH SKILLS", sub: "DISCOVERY", details: "Information Gathering<br>Data Synthesis" },
+            { title: "ANALYTICAL THINKING", sub: "LOGIC", details: "Pattern Recognition<br>Data-Driven Insights" },
+            { title: "PRESENTATION", sub: "COMMUNICATION", details: "Public Speaking<br>Engaging Delivery" },
+            { title: "DECISION MAKING", sub: "LEADERSHIP", details: "Risk Assessment<br>Decisive Action" },
+            { title: "VIDEO EDITING", sub: "MEDIA", details: "Post-Production<br>Storytelling" },
+            { title: "PROMPT ENGINEERING", sub: "AI", details: "LLM Optimization<br>Behavior Tuning" },
+            { title: "AI TOOLS", sub: "TECHNOLOGY", details: "Automation<br>Workflow Enhancement" },
+            { title: "UI/UX DESIGN", sub: "DESIGN", details: "User Journeys<br>Wireframing" },
+            { title: "ALGORITHMS", sub: "PROGRAMMING", details: "Data Structures<br>Code Efficiency" },
+            { title: "INNOVATION", sub: "MINDSET", details: "Creative Solutions<br>Forward Thinking" },
+            { title: "PCB FABRICATION", sub: "HARDWARE", details: "Circuit Layouts<br>Manufacturing" }
         ];
-
-        // Sphere Images
-        const sphereImages = [
-            "gallery/sphere/20220729_173021.webp",
-            "gallery/sphere/IMG-20220805-WA0018.webp",
-            "gallery/sphere/IMG-20240908-WA0040.webp",
-            "gallery/sphere/IMG20240610205908.webp",
-            "gallery/sphere/IMG20240610205931.webp"
-        ];
-
-        let textCardIndex = 0;
-        let imageCardIndex = 0;
 
         for (let i = 0; i < cardCount; i++) {
             const y = 1 - (i / (cardCount - 1)) * 2; // y goes from 1 to -1
@@ -135,47 +78,29 @@ class AnimationEngine {
             const z = Math.sin(theta) * radius;
 
             // Scale position
-            const scale = 180; // Reduced radius for smaller sphere
+            const scale = 380; // Increased radius for bigger sphere
 
             const card = document.createElement('div');
-            // Even/Odd Logic
-            // i=0 -> (1) Odd -> Image
-            // i=1 -> (2) Even -> Text
-            const isEven = (i + 1) % 2 === 0;
-            card.className = `sphere-card ${isEven ? 'even' : 'odd'}`;
+            // All cards are text cards
+            card.className = `sphere-card even`;
 
-            // Generate Inner Content based on Type
-            if (isEven) {
-                // Get skill data (cycle through the 5 skills)
-                const skill = skills[textCardIndex % skills.length];
-                textCardIndex++;
+            // Get skill data
+            const skill = skills[i % skills.length];
 
-                // Flip Card
-                card.innerHTML = `
-                    <div class="flip-wrapper">
-                        <div class="card-face front">
-                            <span class="number">${(i + 1).toString().padStart(2, '0')}</span>
-                            <span class="label">${skill.title}</span>
-                            <span class="sub">${skill.sub}</span>
-                        </div>
-                        <div class="card-face back">
-                            <h3>${skill.title}</h3>
-                            <p class="text-xs leading-relaxed mt-2 text-center font-mono opacity-80">${skill.details}</p>
-                        </div>
-                    </div>
-                `;
-            } else {
-                // Image Holder (Not Flippable, just visual)
-                const imgPath = sphereImages[imageCardIndex % sphereImages.length];
-                imageCardIndex++;
-
-                card.innerHTML = `
+            // Flip Card
+            card.innerHTML = `
+                <div class="flip-wrapper">
                     <div class="card-face front">
-                        <img src="${imgPath}" class="skill-img" alt="Visual" style="object-fit: cover; width: 100%; height: 100%; border-radius: inherit;">
-                        <span class="number" style="position: absolute; bottom: 5px; right: 10px; font-size: 1.5rem; color: white; mix-blend-mode: overlay;">${(i + 1).toString().padStart(2, '0')}</span>
+                        <span class="number">${(i + 1).toString().padStart(2, '0')}</span>
+                        <span class="label">${skill.title}</span>
+                        <span class="sub">${skill.sub}</span>
                     </div>
-                `;
-            }
+                    <div class="card-face back">
+                        <h3>${skill.title}</h3>
+                        <p class="text-xs leading-relaxed mt-2 text-center font-mono opacity-80">${skill.details}</p>
+                    </div>
+                </div>
+            `;
 
             // Rotation Logic
             const rotY = Math.atan2(x, z) * (180 / Math.PI);
@@ -186,7 +111,7 @@ class AnimationEngine {
             // Click Event for Overlay
             card.addEventListener('click', (e) => {
                 e.stopPropagation();
-                this.showOverlay(card, isEven);
+                this.showOverlay(card, true);
             });
 
             container.appendChild(card);
@@ -194,34 +119,61 @@ class AnimationEngine {
     }
 
     showOverlay(sourceCard, isEven) {
-        // Populate overlay
-        const content = sourceCard.innerHTML;
-        this.zoomCard.className = `relative w-[300px] h-[400px] md:w-[350px] md:h-[480px] transform-gpu scale-90 transition-transform duration-300 sphere-card-clone ${isEven ? 'even' : 'odd'}`;
-        this.zoomCard.innerHTML = content;
-
-        // Force flip for text cards
-        if (isEven) {
-            const wrapper = this.zoomCard.querySelector('.flip-wrapper');
+        const grid = document.getElementById('zoom-grid');
+        if (!grid) return;
+        
+        // Clear previous
+        grid.innerHTML = '';
+        
+        const allCards = document.querySelectorAll('#sphereContainer .sphere-card');
+        
+        allCards.forEach((card, index) => {
+            const clone = card.cloneNode(true);
+            clone.style.transform = 'none'; // remove 3d transform
+            clone.style.position = 'relative'; // reset position
+            clone.className = `relative w-[140px] h-[190px] md:w-[170px] md:h-[230px] lg:w-[190px] lg:h-[254px] flex-shrink-0 sphere-card-clone even`;
+            
+            // Force flip if it's text card
+            const wrapper = clone.querySelector('.flip-wrapper');
             if (wrapper) {
                 wrapper.style.transform = 'rotateY(180deg)';
-                // Ensure text is visible
                 const back = wrapper.querySelector('.back');
                 if (back) back.style.backfaceVisibility = 'visible';
             }
-        }
+            
+            // Scatter dispersion effect
+            clone.style.opacity = '0';
+            const randomX = (Math.random() - 0.5) * 800;
+            const randomY = (Math.random() - 0.5) * 800;
+            const randomRot = (Math.random() - 0.5) * 360;
+            clone.style.transform = `translate(${randomX}px, ${randomY}px) scale(0.1) rotate(${randomRot}deg)`;
+            clone.style.transition = `all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) ${Math.random() * 0.15}s`;
+            
+            grid.appendChild(clone);
+            
+            // Trigger animation next frame
+            requestAnimationFrame(() => {
+                setTimeout(() => {
+                    clone.style.opacity = '1';
+                    clone.style.transform = 'translate(0, 0) scale(1) rotate(0deg)';
+                }, 50);
+            });
+        });
 
         // Show overlay
         this.overlay.classList.remove('opacity-0', 'pointer-events-none');
         this.overlay.classList.add('pointer-events-auto');
-        this.zoomCard.classList.remove('scale-90');
-        this.zoomCard.classList.add('scale-100');
     }
 
     hideOverlay() {
         this.overlay.classList.add('opacity-0', 'pointer-events-none');
         this.overlay.classList.remove('pointer-events-auto');
-        this.zoomCard.classList.add('scale-90');
-        this.zoomCard.classList.remove('scale-100');
+        const grid = document.getElementById('zoom-grid');
+        if (grid) {
+            setTimeout(() => {
+                grid.innerHTML = ''; // Clear after fade out
+            }, 300);
+        }
     }
 
     bindEvents() {
@@ -960,12 +912,13 @@ class ParticleText {
             this.interactionLayer.addEventListener('touchstart', (e) => {
                 const touch = e.touches[0];
                 const containerRect = this.container.getBoundingClientRect();
+                const margin = 50; // Add some margin for touch exactly like desktop
 
                 // Check if touch is within the container bounds
-                if (touch.clientX >= containerRect.left &&
-                    touch.clientX <= containerRect.right &&
-                    touch.clientY >= containerRect.top &&
-                    touch.clientY <= containerRect.bottom) {
+                if (touch.clientX >= containerRect.left - margin &&
+                    touch.clientX <= containerRect.right + margin &&
+                    touch.clientY >= containerRect.top - margin &&
+                    touch.clientY <= containerRect.bottom + margin) {
 
                     this.isTouchingText = true;
                     if (e.cancelable) e.preventDefault();
@@ -993,6 +946,27 @@ class ParticleText {
                 this.isTouchingText = false;
                 this.mouse.x = null;
                 this.mouse.y = null;
+            });
+
+            // Allow clicking to trigger the repulsion on touch devices
+            this.interactionLayer.addEventListener('click', (e) => {
+                const canvasRect = this.canvas.getBoundingClientRect();
+                this.mouse.x = e.clientX - canvasRect.left;
+                this.mouse.y = e.clientY - canvasRect.top;
+
+                // On mobile, boost the repel force temporarily on tap
+                const originalRadius = this.mouse.radius;
+                this.mouse.radius = 250; // Increased radius for click
+                this.startAnimation();
+
+                // Reset after a brief moment to allow particles to return
+                setTimeout(() => {
+                    this.mouse.radius = originalRadius;
+                    if (!this.isTouchingText) {
+                        this.mouse.x = null;
+                        this.mouse.y = null;
+                    }
+                }, 500);
             });
         }
     }
